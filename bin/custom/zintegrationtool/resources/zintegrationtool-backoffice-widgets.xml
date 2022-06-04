@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widgets.xsd">
+
+    <!--<
+    widget-extension widgetId="integrationBackofficeExplorerTree">
+    </widget-extension>
+     -->
+    <!--
+    <widget-extension widgetId="collapsibleContainer">
+        <remove widgetId="editorArea"/>
+    </widget-extension>
+-->
+
+<!--
+    <widget-extension widgetId="integrationBackofficeToolPerspective" >
+        <setting key="eastDisabled" type="Boolean" value="false"/>
+    </widget-extension>
+    <widget-extension widgetId="integrationBackofficeExplorerTree">
+        <move widgetId="integrationBackofficeToolPerspective" targetWidgetId="integrationBackofficeToolPerspective" targetSlotId="rightSlot" failOnError="true" />
+    </widget-extension>
+-->
+
+
+
+    <widget-extension widgetId="integrationTypeCodeExtractor">
+        <widget id="integrationTypeCodeRouterExtended"
+                widgetDefinitionId="com.hybris.cockpitng.widgets.common.multiplexer">
+        <setting key="errorMonitoring_expression" type="String">#root eq 'errorMonitoring'</setting>
+        <virtual-sockets>
+            <output id="errorMonitoring" type="java.lang.String"/>
+        </virtual-sockets>
+        </widget>
+    </widget-extension>
+
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoring"
+    targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectInboundChannelConfigurationContainer" />
+
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoring"
+                       targetWidgetId="inboundChannelConfigurationContainer" inputId="activate"/>
+
+
+
+
+
+
+
+    <!--
+    <widget-extension widgetId="integrationTypeCodeExtractor">
+        <widget id="integrationTypeCodeRouterExtended" widgetDefinitionId="com.hybris.cockpitng.widgets.common.multiplexer"
+                slotId="cockpitWidgetChildrenInvisible">
+
+        </widget>
+    </widget-extension>
+    -->
+
+
+</widgets>

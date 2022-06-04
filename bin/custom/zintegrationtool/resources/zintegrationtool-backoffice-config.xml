@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<config xmlns="http://www.hybris.com/cockpit/config"
+	xmlns:ea="http://www.hybris.com/cockpitng/component/editorArea"
+	xmlns:na="http://www.hybris.com/cockpitng/config/notifications"
+	xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config"
+	xmlns:n="http://www.hybris.com/cockpitng/config/explorertree"
+	xmlns:y="http://www.hybris.com/cockpit/config/hybris"
+	xmlns:as="http://www.hybris.com/cockpitng/config/advancedsearch"
+	xmlns:list="http://www.hybris.com/cockpitng/component/listView"
+	xmlns:b="http://www.hybris.com/cockpit/config/hybris">
+
+	<!-- zintegrationtool UI configuration should be provided here -->
+
+	<!--<context component="component-code" module="zintegrationtool">-->
+		<!--Please check documentation for code snippets for specific components-->
+	<!--</context>-->
+
+	<context component="integrationbackoffice-explorer-tree" merge-by="component">
+		<n:explorer-tree>
+			<!--<n:type-node id="integrationbackoffice.explorer.treenode.customnode" code="customnode"/>-->
+			<n:navigation-node id="integrationbackoffice.explorer.treenode.monitoring" expanded-by-default="true">
+				<n:type-node id="integrationbackoffice.explorer.typenode.errorMonitoring" code="ErrorMonitoring" />
+			</n:navigation-node>
+		</n:explorer-tree>
+	</context>
+
+
+	<context type="ErrorMonitoring">
+	<context component="base">
+		<b:base>
+			<b:labels>
+				<b:label>errorMonitoring.code</b:label>
+			</b:labels>
+		</b:base>
+	</context>
+	</context>
+</config>
