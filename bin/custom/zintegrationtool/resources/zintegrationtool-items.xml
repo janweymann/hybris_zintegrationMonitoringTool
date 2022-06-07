@@ -10,6 +10,17 @@
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
 	<itemtypes>
+		<itemtype code="ErrorMonitoringRequest" extends="InboundRequest"
+		autocreate="true" generate="true">
+			<deployment table="ZMonitoringRequest" typecode="10110"/>
+		</itemtype>
+		<itemtype code="ErrorMonitoringRequestError" extends="InboundRequestError"
+				  autocreate="true" generate="true">
+			<deployment table="ZMonitoringRequestError" typecode="10100"/>
+		</itemtype>
+	</itemtypes>
+
+
 <!--
 		<itemtype generate="true"
 		   code="MyProduct"
@@ -36,5 +47,5 @@
 			</attributes>
 		</itemtype>
 -->
-	</itemtypes>
+
 </items>
