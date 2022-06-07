@@ -8,7 +8,7 @@
 
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			xsi:noNamespaceSchemaLocation="items.xsd">
-
+<!--
 	<itemtypes>
 		<itemtype code="ErrorMonitoringRequest" extends="InboundRequest"
 		autocreate="true" generate="true">
@@ -19,7 +19,7 @@
 			<deployment table="ZMonitoringRequestError" typecode="10100"/>
 		</itemtype>
 	</itemtypes>
-
+-->
 
 <!--
 		<itemtype generate="true"
