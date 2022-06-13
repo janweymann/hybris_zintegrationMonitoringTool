@@ -9,7 +9,7 @@
                       widgetDefinitionId="com.hybris.cockpitng.widgets.common.multiplexer"
                       slotId="cockpitWidgetChildrenInvisible">
         <setting key="errorMonitoringRequest_expression" type="String">#root eq 'ErrorMonitoringRequest'</setting>
-        <setting key="errorMonitoringRequest_eval" type="String" value="'InboundRequest'"/>
+        <setting key="errorMonitoringRequest_eval" type="String" value="'InboundRequestError'"/>
         <virtual-sockets>
             <output id="errorMonitoringRequest" type="java.lang.String"/>
         </virtual-sockets>
@@ -28,14 +28,15 @@
                 <setting key="disableSubtypesCheckbox" type="Boolean">true</setting>
                 <setting key="disableAdvancedSearchToolbar" type="Boolean">true</setting>
                 <setting key="isNestedObjectCreationDisabled" type="Boolean">true</setting>
-                <!-- <setting key="advancedSearchConfigCtxCode" type="String">zintegrationtool-advanced-search</setting> -->
+               <setting key="simpleSearchConfigCtxCode" type="String">zintegrationtool-simple-search</setting>
+                <setting key="advancedSearchConfigCtxCode" type="String">zintegrationtool-advanced-search</setting>
                 <virtual-sockets/>
             </widget>
             <widget id="errorMonitoringRequestSearchResult"
                     widgetDefinitionId="com.hybris.cockpitng.collectionBrowser"
                     slotId="center">
                 <setting key="socketDataType_$T" type="String">
-                    de.hybris.platform.inboundservices.model.InboundRequestModel
+                    de.hybris.platform.inboundservices.model.InboundRequestErrorModel
                 </setting>
                 <setting key="colConfigCtxCode" type="String">zintegrationtool-listview</setting>
             </widget>
@@ -43,7 +44,7 @@
                     widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
                     slotId="bottom">
                 <setting key="socketDataType_$T" type="String">
-                    de.hybris.platform.inboundservices.model.InboundRequestModel
+                    de.hybris.platform.inboundservices.model.InboundRequestErrorModel
                 </setting>
                 <setting key="toolbarDisabled" type="Boolean">true</setting>
                 <setting key="editorAreaConfigCtx" type="String">zintegrationtool-editor-area</setting>
