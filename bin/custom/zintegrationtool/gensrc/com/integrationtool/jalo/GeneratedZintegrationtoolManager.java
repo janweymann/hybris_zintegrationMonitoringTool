@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 01.06.2022, 12:14:50                        ---
+ * --- Generated at 13.06.2022, 13:28:37                        ---
  * ----------------------------------------------------------------
  */
 package com.integrationtool.jalo;

@@ -3,21 +3,13 @@
  Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
 -->
 <widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widgets.xsd">
+         xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widgets.xsd">
 
-    <!--<
-    widget-extension widgetId="integrationBackofficeExplorerTree">
-    </widget-extension>
-     -->
-    <!--
-    <widget-extension widgetId="collapsibleContainer">
-        <remove widgetId="editorArea"/>
-    </widget-extension>
--->
     <widget-extension widgetId="integrationTypeCodeRouter"
                       widgetDefinitionId="com.hybris.cockpitng.widgets.common.multiplexer"
                       slotId="cockpitWidgetChildrenInvisible">
         <setting key="errorMonitoringRequest_expression" type="String">#root eq 'ErrorMonitoringRequest'</setting>
+        <setting key="errorMonitoringRequest_eval" type="String" value="'InboundRequest'"/>
         <virtual-sockets>
             <output id="errorMonitoringRequest" type="java.lang.String"/>
         </virtual-sockets>
@@ -25,8 +17,9 @@
 
     <widget-extension widgetId="integrationBackofficeViewSwitcher">
         <widget id="errorMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
-            slotId="views" title="Error Monitoring">
-            <widget id="errorMonitoringRequestSearchEngine" widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
+                slotId="views" title="Error Monitoring">
+            <widget id="errorMonitoringRequestSearchEngine"
+                    widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
                     slotId="cockpitWidgetChildrenInvisible">
                 <virtual-sockets/>
             </widget>
@@ -35,13 +28,16 @@
                 <setting key="disableSubtypesCheckbox" type="Boolean">true</setting>
                 <setting key="disableAdvancedSearchToolbar" type="Boolean">true</setting>
                 <setting key="isNestedObjectCreationDisabled" type="Boolean">true</setting>
-                <virtual-sockets />
+                <!-- <setting key="advancedSearchConfigCtxCode" type="String">zintegrationtool-advanced-search</setting> -->
+                <virtual-sockets/>
             </widget>
             <widget id="errorMonitoringRequestSearchResult"
                     widgetDefinitionId="com.hybris.cockpitng.collectionBrowser"
                     slotId="center">
                 <setting key="socketDataType_$T" type="String">
-                    de.hybris.platform.inboundservices.model.InboundRequestModel</setting>
+                    de.hybris.platform.inboundservices.model.InboundRequestModel
+                </setting>
+                <setting key="colConfigCtxCode" type="String">zintegrationtool-listview</setting>
             </widget>
             <widget id="errorMonitoringRequestDetails"
                     widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
@@ -50,126 +46,26 @@
                     de.hybris.platform.inboundservices.model.InboundRequestModel
                 </setting>
                 <setting key="toolbarDisabled" type="Boolean">true</setting>
-                <setting key="editorAreaConfigCtx" type="String">integration-editor-area</setting>
+                <setting key="editorAreaConfigCtx" type="String">zintegrationtool-editor-area</setting>
             </widget>
             <setting key="topPanelCollapsed">true</setting>
         </widget>
-        <setting key="selectErrorMonitor_eval" type="String" value="'errorMonitor'" />
+        <setting key="selectErrorMonitor_eval" type="String" value="'errorMonitor'"/>
         <virtual-sockets>
-            <input id="selectErrorMonitor" type="java.lang.Object" />
+            <input id="selectErrorMonitor" type="java.lang.Object"/>
         </virtual-sockets>
     </widget-extension>
 
     <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoringRequest"
-                       targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectErrorMonitor" />
+                       targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectErrorMonitor"/>
     <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoringRequest"
-                       targetWidgetId="errorMonitor" inputId="activate" />
+                       targetWidgetId="errorMonitor" inputId="activate"/>
     <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoringRequest"
-                       targetWidgetId="errorMonitoringRequestSearchCondition" inputId="type" />
+                       targetWidgetId="errorMonitoringRequestSearchCondition" inputId="type"/>
     <widget-connection sourceWidgetId="errorMonitoringRequestSearchCondition" outputId="searchData"
-                       targetWidgetId="errorMonitoringRequestSearchEngine" inputId="searchData" />
+                       targetWidgetId="errorMonitoringRequestSearchEngine" inputId="searchData"/>
     <widget-connection sourceWidgetId="errorMonitoringRequestSearchEngine" outputId="pageable"
-                       targetWidgetId="errorMonitoringRequestSearchResult" inputId="pageable" />
+                       targetWidgetId="errorMonitoringRequestSearchResult" inputId="pageable"/>
     <widget-connection sourceWidgetId="errorMonitoringRequestSearchResult" outputId="selectedItem"
-                       targetWidgetId="errorMonitoringRequestDetails" inputId="inputObject" />
-
-<!--
-    <widget-extension widgetId="integrationTypeCodeRouter"
-                      widgetDefinitionId="com.hybris.cockpitng.widgets.common.multiplexer"
-                      slotId="cockpitWidgetChildrenInvisible">
-        <setting key="inboundRequests_expression" type="String">#root eq 'InboundRequest'</setting>
-        <setting key="outboundRequests_expression" type="String">#root eq 'OutboundRequest'</setting>
-        <virtual-sockets>
-            <output id="inboundRequests" type="java.lang.String" />
-            <output id="outboundRequests" type="java.lang.String" />
-        </virtual-sockets>
-    </widget-extension>
-
-    <widget-extension widgetId="integrationBackofficeViewSwitcher">
-        <widget id="inboundMonitor"
-                widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
-                slotId="views" title="Inbound Monitoring">
-            <widget id="inboundRequestSearchEngine"
-                    widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
-                    slotId="cockpitWidgetChildrenInvisible">
-                <virtual-sockets />
-            </widget>
-            <widget id="inboundRequestSearchCondition" widgetDefinitionId="com.hybris.cockpitng.advancedsearch"
-                    slotId="top">
-                <setting key="disableSubtypesCheckbox" type="Boolean">true</setting>
-                <setting key="disableAdvancedSearchToolbar" type="Boolean">true</setting>
-                <setting key="isNestedObjectCreationDisabled" type="Boolean">true</setting>
-                <virtual-sockets />
-            </widget>
-            <widget id="inboundRequestSearchResult"
-                    widgetDefinitionId="com.hybris.cockpitng.collectionBrowser"
-                    slotId="center">
-                <setting key="socketDataType_$T" type="String">de.hybris.platform.inboundservices.model.InboundRequestModel</setting>
-            </widget>
-            <widget id="inboundRequestDetails"
-                    widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
-                    slotId="bottom">
-                <setting key="socketDataType_$T" type="String">
-                    de.hybris.platform.inboundservices.model.InboundRequestModel
-                </setting>
-                <setting key="toolbarDisabled" type="Boolean">true</setting>
-                <setting key="editorAreaConfigCtx" type="String">integration-editor-area</setting>
-            </widget>
-            <setting key="topPanelCollapsed">true</setting>
-        </widget>
-
-        <widget id="outboundMonitor"
-                widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
-                slotId="views" title="Outbound Monitoring">
-            <widget id="outboundRequestSearchEngine"
-                    widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
-                    slotId="cockpitWidgetChildrenInvisible">
-                <virtual-sockets />
-            </widget>
-            <widget id="outboundRequestSearchCondition" widgetDefinitionId="com.hybris.cockpitng.advancedsearch"
-                    slotId="top">
-                <setting key="disableSubtypesCheckbox" type="Boolean">true</setting>
-                <setting key="disableAdvancedSearchToolbar" type="Boolean">true</setting>
-                <setting key="isNestedObjectCreationDisabled" type="Boolean">true</setting>
-                <virtual-sockets />
-            </widget>
-            <widget id="outboundRequestSearchResult"
-                    widgetDefinitionId="com.hybris.cockpitng.collectionBrowser"
-                    slotId="center">
-                <setting key="socketDataType_$T" type="String">de.hybris.platform.outboundservices.model.OutboundRequestModel</setting>
-            </widget>
-            <widget id="outboundRequestDetails"
-                    widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
-                    slotId="bottom">
-                <setting key="socketDataType_$T" type="String">de.hybris.platform.outboundservices.model.OutboundRequestModel</setting>
-                <setting key="toolbarDisabled" type="Boolean">true</setting>
-                <setting key="editorAreaConfigCtx" type="String">integration-editor-area</setting>
-            </widget>
-            <setting key="topPanelCollapsed">true</setting>
-        </widget>
-
-        <setting key="selectInboundMonitor_eval" type="String" value="'inboundMonitor'" />
-        <setting key="selectOutboundMonitor_eval" type="String" value="'outboundMonitor'" />
-        <virtual-sockets>
-            <input id="selectInboundMonitor" type="java.lang.Object" />
-            <input id="selectOutboundMonitor" type="java.lang.Object" />
-        </virtual-sockets>
-    </widget-extension>
-    -->
-<!--
-    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoring"
-                       targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectInboundChannelConfigurationContainer" />
-
-    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoring"
-                       targetWidgetId="inboundChannelConfigurationContainer" inputId="activate"/>
--->
-
-    <!--
-    <widget-extension widgetId="integrationTypeCodeExtractor">
-        <widget id="integrationTypeCodeRouterExtended" widgetDefinitionId="com.hybris.cockpitng.widgets.common.multiplexer"
-                slotId="cockpitWidgetChildrenInvisible">
-
-        </widget>
-    </widget-extension>
-    -->
+                       targetWidgetId="errorMonitoringRequestDetails" inputId="inputObject"/>
 </widgets>

@@ -8,8 +8,11 @@
                 		
         
         <requires-extension name="backoffice"/>
-                		
-        
+
+        <requires-extension name="integrationbackoffice"/>
+
+        <requires-extension name="inboundservices"/>
+
         <!--PLACEHOLDER_FOR_SASS_REGISTRATION-->
                 		
         
