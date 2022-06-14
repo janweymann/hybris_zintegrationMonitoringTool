@@ -5,68 +5,136 @@
 <widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widgets.xsd">
 
+    <!-- Navigation Explorer Tree -->
     <widget-extension widgetId="integrationTypeCodeRouter"
                       widgetDefinitionId="com.hybris.cockpitng.widgets.common.multiplexer"
                       slotId="cockpitWidgetChildrenInvisible">
-        <setting key="errorMonitoringRequest_expression" type="String">#root eq 'ErrorMonitoringRequest'</setting>
-        <setting key="errorMonitoringRequest_eval" type="String" value="'InboundRequestError'"/>
+        <setting key="zInboundRequestError_expression" type="String">#root eq 'ZInboundRequestError'</setting>
+        <setting key="zInboundRequestError_eval" type="String" value="'InboundRequestError'"/>
+        <setting key="zInboundRequest_expression" type="String">#root eq 'ZInboundRequest'</setting>
+        <setting key="zInboundRequest_eval" type="String" value="'InboundRequest'"/>
+        <setting key="zSolutionTool_expression" type="String">#root eq 'ZSolutionTool'</setting>
+        <setting key="zSolutionTool_eval" type="String" value="'ZProposedSolution'"/>
         <virtual-sockets>
-            <output id="errorMonitoringRequest" type="java.lang.String"/>
+            <output id="zInboundRequestError" type="java.lang.String"/>
+            <output id="zInboundRequest" type="java.lang.String"/>
+            <output id="ZSolutionTool" type="java.lang.String"/>
         </virtual-sockets>
     </widget-extension>
 
+    <!-- InboundRequestError Monitoring View  -->
     <widget-extension widgetId="integrationBackofficeViewSwitcher">
-        <widget id="errorMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
-                slotId="views" title="Error Monitoring">
-            <widget id="errorMonitoringRequestSearchEngine"
+        <widget id="zInboundRequestErrorMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
+                slotId="views" title="InboundRequestError Monitoring">
+            <widget id="zInboundRequestErrorViewSearchEngine"
                     widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
                     slotId="cockpitWidgetChildrenInvisible">
                 <virtual-sockets/>
             </widget>
-            <widget id="errorMonitoringRequestSearchCondition" widgetDefinitionId="com.hybris.cockpitng.advancedsearch"
+            <widget id="zInboundRequestErrorSearchCondition" widgetDefinitionId="com.hybris.cockpitng.advancedsearch"
                     slotId="top">
                 <setting key="disableSubtypesCheckbox" type="Boolean">true</setting>
                 <setting key="disableAdvancedSearchToolbar" type="Boolean">true</setting>
                 <setting key="isNestedObjectCreationDisabled" type="Boolean">true</setting>
-               <setting key="simpleSearchConfigCtxCode" type="String">zintegrationtool-simple-search</setting>
-                <setting key="advancedSearchConfigCtxCode" type="String">zintegrationtool-advanced-search</setting>
+                <setting key="simpleSearchConfigCtxCode" type="String">zinboundrequest-error-simple-search</setting>
+                <setting key="advancedSearchConfigCtxCode" type="String">zinboundrequest-error-advanced-search</setting>
                 <virtual-sockets/>
             </widget>
-            <widget id="errorMonitoringRequestSearchResult"
+            <widget id="zInboundRequestErrorSearchResult"
                     widgetDefinitionId="com.hybris.cockpitng.collectionBrowser"
                     slotId="center">
                 <setting key="socketDataType_$T" type="String">
                     de.hybris.platform.inboundservices.model.InboundRequestErrorModel
                 </setting>
-                <setting key="colConfigCtxCode" type="String">zintegrationtool-listview</setting>
+                <setting key="colConfigCtxCode" type="String">zinboundrequest-error-listview</setting>
             </widget>
-            <widget id="errorMonitoringRequestDetails"
+            <widget id="zInboundRequestErrorDetails"
                     widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
                     slotId="bottom">
                 <setting key="socketDataType_$T" type="String">
                     de.hybris.platform.inboundservices.model.InboundRequestErrorModel
                 </setting>
                 <setting key="toolbarDisabled" type="Boolean">true</setting>
-                <setting key="editorAreaConfigCtx" type="String">zintegrationtool-editor-area</setting>
+                <setting key="editorAreaConfigCtx" type="String">zinbound-error-editor-area</setting>
             </widget>
             <setting key="topPanelCollapsed">true</setting>
         </widget>
-        <setting key="selectErrorMonitor_eval" type="String" value="'errorMonitor'"/>
+        <setting key="selectzInboundRequestErrorMonitor_eval" type="String" value="'zInboundRequestErrorMonitor'"/>
         <virtual-sockets>
-            <input id="selectErrorMonitor" type="java.lang.Object"/>
+            <input id="selectzInboundRequestErrorMonitor" type="java.lang.Object"/>
         </virtual-sockets>
     </widget-extension>
 
-    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoringRequest"
-                       targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectErrorMonitor"/>
-    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoringRequest"
-                       targetWidgetId="errorMonitor" inputId="activate"/>
-    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="errorMonitoringRequest"
-                       targetWidgetId="errorMonitoringRequestSearchCondition" inputId="type"/>
-    <widget-connection sourceWidgetId="errorMonitoringRequestSearchCondition" outputId="searchData"
-                       targetWidgetId="errorMonitoringRequestSearchEngine" inputId="searchData"/>
-    <widget-connection sourceWidgetId="errorMonitoringRequestSearchEngine" outputId="pageable"
-                       targetWidgetId="errorMonitoringRequestSearchResult" inputId="pageable"/>
-    <widget-connection sourceWidgetId="errorMonitoringRequestSearchResult" outputId="selectedItem"
-                       targetWidgetId="errorMonitoringRequestDetails" inputId="inputObject"/>
+    <!-- InboundRequest Monitoring View -->
+    <widget-extension widgetId="integrationBackofficeViewSwitcher">
+        <widget id="zInboundRequestMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
+                slotId="views" title="InboundRequest Monitoring">
+            <widget id="zInboundRequestViewSearchEngine"
+                    widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
+                    slotId="cockpitWidgetChildrenInvisible">
+                <virtual-sockets/>
+            </widget>
+            <widget id="zInboundRequestSearchCondition" widgetDefinitionId="com.hybris.cockpitng.advancedsearch"
+                    slotId="top">
+                <setting key="disableSubtypesCheckbox" type="Boolean">true</setting>
+                <setting key="disableAdvancedSearchToolbar" type="Boolean">true</setting>
+                <setting key="isNestedObjectCreationDisabled" type="Boolean">true</setting>
+                <setting key="simpleSearchConfigCtxCode" type="String">zinboundrequest-simple-search</setting>
+                <setting key="advancedSearchConfigCtxCode" type="String">zinboundrequest-advanced-search</setting>
+                <virtual-sockets/>
+            </widget>
+            <widget id="zInboundRequestSearchResult"
+                    widgetDefinitionId="com.hybris.cockpitng.collectionBrowser"
+                    slotId="center">
+                <setting key="socketDataType_$T" type="String">
+                    de.hybris.platform.inboundservices.model.InboundRequestErrorModel
+                </setting>
+                <setting key="maxCharsInCell" value="200"></setting>
+                <setting key="colConfigCtxCode" type="String">zinboundrequest-listview</setting>
+            </widget>
+            <widget id="zInboundRequestDetails"
+                    widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
+                    slotId="bottom">
+                <setting key="socketDataType_$T" type="String">
+                    de.hybris.platform.inboundservices.model.InboundRequestErrorModel
+                </setting>
+                <setting key="toolbarDisabled" type="Boolean">true</setting>
+                <setting key="editorAreaConfigCtx" type="String">zinboundrequest-editor-area</setting>
+            </widget>
+            <setting key="topPanelCollapsed">true</setting>
+        </widget>
+        <setting key="selectzInboundRequestMonitor_eval" type="String" value="'zInboundRequestMonitor'"/>
+        <virtual-sockets>
+            <input id="selectzInboundRequestMonitor" type="java.lang.Object"/>
+        </virtual-sockets>
+    </widget-extension>
+
+    <!-- Connections InboundRequestError View -->
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zInboundRequestError"
+                       targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectzInboundRequestErrorMonitor"/>
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zInboundRequestError"
+                       targetWidgetId="zInboundRequestErrorMonitor" inputId="activate"/>
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zInboundRequestError"
+                       targetWidgetId="zInboundRequestErrorSearchCondition" inputId="type"/>
+    <widget-connection sourceWidgetId="zInboundRequestErrorSearchCondition" outputId="searchData"
+                       targetWidgetId="zInboundRequestErrorViewSearchEngine" inputId="searchData"/>
+    <widget-connection sourceWidgetId="zInboundRequestErrorViewSearchEngine" outputId="pageable"
+                       targetWidgetId="zInboundRequestErrorSearchResult" inputId="pageable"/>
+    <widget-connection sourceWidgetId="zInboundRequestErrorSearchResult" outputId="selectedItem"
+                       targetWidgetId="zInboundRequestErrorDetails" inputId="inputObject"/>
+
+    <!-- Connections InboundRequest View -->
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zInboundRequest"
+                       targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectzInboundRequestMonitor"/>
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zInboundRequest"
+                       targetWidgetId="zInboundRequestMonitor" inputId="activate"/>
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zInboundRequest"
+                       targetWidgetId="zInboundRequestSearchCondition" inputId="type"/>
+    <widget-connection sourceWidgetId="zInboundRequestSearchCondition" outputId="searchData"
+                       targetWidgetId="zInboundRequestViewSearchEngine" inputId="searchData"/>
+    <widget-connection sourceWidgetId="zInboundRequestViewSearchEngine" outputId="pageable"
+                       targetWidgetId="zInboundRequestSearchResult" inputId="pageable"/>
+    <widget-connection sourceWidgetId="zInboundRequestSearchResult" outputId="selectedItem"
+                       targetWidgetId="zInboundRequestDetails" inputId="inputObject"/>
+
 </widgets>

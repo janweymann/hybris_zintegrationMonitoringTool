@@ -11,26 +11,143 @@
         xmlns:list="http://www.hybris.com/cockpitng/component/listView">
 
 
-    <!-- Extension Explorer Tree -->
+    <!-- Extension zExplorer Tree -->
     <context component="integrationbackoffice-explorer-tree" merge-by="component">
         <n:explorer-tree>
-            <n:navigation-node id="integrationbackoffice.explorer.treenode.monitoring" expanded-by-default="true">
-                <n:type-node id="integrationbackoffice.explorer.typenode.errormonitoring"
-                             code="ErrorMonitoringRequest"/>
+            <n:navigation-node id="zintegrationtool.explorer.treenode.errormonitoring" expanded-by-default="true" position="2">
+                <n:type-node id="integrationbackoffice.explorer.typenode.zinbounderror"
+                             code="ZInboundRequestError"/>
+                <n:type-node id="integrationbackoffice.explorer.typenode.zinbound"
+                             code="ZInboundRequest"/>
+                <n:type-node id="integrationbackoffice.explorer.typenode.zsolutiontool"
+                             code="ZSolutionTool"/>
             </n:navigation-node>
         </n:explorer-tree>
     </context>
 
-    <!-- Errror Monitoring -->
+    <!-- ZInboundRequestError View Config -->
+    <context type="InboundRequestError" component="zinboundrequest-error-simple-search">
+        <ss:simple-search>
+            <ss:field name="pk"/>
+            <ss:sort-field name="creationtime" asc="false"/>
+        </ss:simple-search>
+    </context>
+
+    <context type="InboundRequestError" component="zinboundrequest-error-advanced-search">
+        <as:advanced-search connection-operator="AND">
+            <as:field-list>
+                <as:field name="pk" operator="contains" selected="true"/>
+                <as:field name="code" operator="contains" selected="true"/>
+                <as:field name="creationtime" operator="contains" selected="true"/>
+                <as:field name="owner" operator="contains"/>
+                <as:field name="message" operator="contains"/>
+                <as:field name="modifiedtime" operator="contains"/>
+                <as:field name="coments" operator="contains"/>
+                <as:field name="inboundRequest" operator="contains" selected="true"/>
+            </as:field-list>
+            <as:sort-field name="creationtime" asc="false"/>
+        </as:advanced-search>
+    </context>
+
+    <context component="zinboundrequest-error-listview">
+        <context type="InboundRequestError">
+            <list:list-view>
+                <list:column qualifier="inboundRequest.type"/>
+                <list:column qualifier="inboundRequest.integrationKey"/>
+                <list:column qualifier="pk"/>
+                <list:column qualifier="creationtime"/>
+                <list:column qualifier="code"/>
+                <list:column qualifier="message"/>
+            </list:list-view>
+        </context>
+    </context>
+
+    <context component="zinbound-error-editor-area">
+        <context type="InboundRequestError">
+            <ea:editorArea>
+                <ea:tab name="InboundRequestError">
+                    <ea:section name="zintegrationtool.monitoring.inboundrequest.error.details">
+                        <!-- <ea:attribute qualifier="inboundRequest.type" readonly="true"/>
+                        <ea:attribute qualifier="inboundRequest.integrationKey" readonly="true"/> -->
+                        <ea:attribute qualifier="pk" readonly="true"/>
+                        <ea:attribute qualifier="creationtime" readonly="true"/>
+                        <ea:attribute qualifier="code" readonly="true"/>
+                        <!-- <ea:attribute qualifier="message" readonly="true"/>-->
+                        <ea:attribute qualifier="inboundRequest" readonly="true"/>
+                        <ea:panel name="erro.message.inbounderror.key" colspan="4">
+                            <ea:attribute qualifier="message">
+                                <ea:editor-parameter>
+                                    <ea:name>rows</ea:name>
+                                    <ea:value>2</ea:value>
+                                </ea:editor-parameter>
+                            </ea:attribute>
+                        </ea:panel>
+                    </ea:section>
+                </ea:tab>
+            </ea:editorArea>
+        </context>
+    </context>
+
     <!--
-    <context type="InboundRequest" component="simple-search">
+    <context parent="GenericItem" type="KCPdfTemplateFooter" component="editor-area" merge-by="type">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:tab name="product.kaeser.section">
+                <editorArea:section name="product.kaeser.section">
+                    <editorArea:attribute qualifier="code"/>
+                    <editorArea:attribute qualifier="kcPdfGenTemplates"/>
+                    <editorArea:attribute qualifier="baseStore"/>
+                    <editorArea:attribute qualifier="description"/>
+                    <editorArea:panel name="dummy.key.required.in.here" colspan="4">
+                        <editorArea:attribute qualifier="footerHtml">
+                            <editorArea:editor-parameter>
+                                <editorArea:name>rows</editorArea:name>
+                                <editorArea:value>10</editorArea:value>
+                            </editorArea:editor-parameter>
+                        </editorArea:attribute>
+                    </editorArea:panel>
+                </editorArea:section>
+            </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+    -->
+
+    <context type="InboundRequestError" component="listviewactions">
+        <y:actions/>
+    </context>
+
+    <context type="InboundRequestError" component="editorareaactions">
+        <y:actions/>
+    </context>
+
+    <context type="InboundRequest" component="zinbounderror-listview">
+        <list:list-view>
+            <list:column qualifier="inboundRequestError"/>
+            <list:column qualifier="type"/>
+            <list:column qualifier="integrationKey"/>
+        </list:list-view>
+    </context>
+
+    <context type="InboundRequest" component="listviewactions">
+        <y:actions/>
+    </context>
+
+    <context type="InboundRequest" component="editorareaactions">
+        <y:actions/>
+    </context>
+
+    <context type="InboundRequest" component="collectioneditorareaactions">
+        <y:actions/>
+    </context>
+
+    <!-- InboundRequest View Config -->
+    <context type="InboundRequest" component="zinboundrequest-simple-search">
         <ss:simple-search>
             <ss:field name="integrationKey"/>
             <ss:sort-field name="creationtime" asc="false"/>
         </ss:simple-search>
     </context>
 
-    <context type="InboundRequest" component="zintegrationtool-advanced-search">
+    <context type="InboundRequest" component="zinboundrequest-advanced-search">
         <as:advanced-search connection-operator="AND">
             <as:field-list>
                 <as:field name="integrationKey" operator="contains" selected="true"/>
@@ -47,43 +164,31 @@
         </as:advanced-search>
     </context>
 
-    <context component="zintegrationtool-listview">
+    <context component="zinboundrequest-listview">
         <context type="InboundRequest">
             <list:list-view>
                 <list:column qualifier="integrationKey"/>
-                <list:column qualifier="messageId"/>
                 <list:column qualifier="type"/>
-                <list:column qualifier="httpMethod"/>
-                <list:column qualifier="status"/>
                 <list:column qualifier="creationtime"/>
-                <list:column qualifier="errors.message"/>
+                <list:column qualifier="status"/>
+                <list:column qualifier="errors" type="HYBRIS.LONG_STRING"/>
             </list:list-view>
         </context>
-    </context>
--->
-    <!--
-    <context component="zintegrationtool-listview" >
-        <context type="InboundRequest" merge-by="type">
-            <list:list-view>
-                <list:column qualifier="message"/>
-            </list:list-view>
-        </context>
-    </context>
--->
-    <!--
-    <context type="InboundRequestError" component="base" merge-by="type" parent="GenericItem">
-        <y:base>
-            <y:labels>
-                <y:label>code</y:label>
-                <y:shortLabel>code</y:shortLabel>
-            </y:labels>
-        </y:base>
     </context>
 
-    <context type="InboundRequest" component="zintegrationtool-editor-area">
+    <context type="InboundRequestError" component="base" merge-by="type" parent="GenericItem">
+    <y:base>
+        <y:labels>
+            <y:label>message</y:label>
+            <y:shortLabel>message</y:shortLabel>
+        </y:labels>
+    </y:base>
+    </context>
+
+    <context type="InboundRequest" component="zinboundrequest-editor-area">
         <ea:editorArea>
             <ea:tab name="InboundRequest">
-                <ea:section name="integrationbackoffice.monitoring.errormonitoring.details">
+                <ea:section name="zintegrationtool.monitoring.inboundrequest.details">
                     <ea:attribute qualifier="integrationKey" readonly="true"/>
                     <ea:attribute qualifier="sapPassport" readonly="true"/>
                     <ea:attribute qualifier="messageId" readonly="true"/>
@@ -98,7 +203,14 @@
                         </ea:editor-parameter>
                     </ea:attribute>
                     <ea:attribute qualifier="payload" readonly="true"/>
-                    <ea:attribute qualifier="errors" readonly="true"/>
+                    <ea:panel name="erro.message.inbound.key" colspan="4">
+                        <ea:attribute qualifier="errors">
+                            <ea:editor-parameter>
+                                <ea:name>rows</ea:name>
+                                <ea:value>2</ea:value>
+                            </ea:editor-parameter>
+                        </ea:attribute>
+                    </ea:panel>
                 </ea:section>
             </ea:tab>
         </ea:editorArea>
@@ -113,7 +225,7 @@
     </context>
 
 
-    <context type="InboundRequestError" component="zintegrationtool-listview">
+    <context type="InboundRequestError" component="zinboundrequest-listview">
         <list:list-view>
             <list:column qualifier="inboundRequest"/>
             <list:column qualifier="code"/>
@@ -121,7 +233,7 @@
         </list:list-view>
     </context>
 
-    <context type="InboundRequestError" component="zintegrationtool-editor-area">
+    <context type="InboundRequestError" component="zinboundrequest-editor-area">
         <ea:editorArea>
             <ea:tab name="InboundRequestError">
                 <ea:section name="integrationbackoffice.monitoring.errormonitoring.error.details">
@@ -143,108 +255,7 @@
     <context type="InboundRequestError" component="collectioneditorareaactions">
         <y:actions/>
     </context>
--->
 
-    <context type="InboundRequestError" component="zintegrationtool-simple-search">
-        <ss:simple-search>
-            <ss:field name="pk"/>
-            <ss:sort-field name="creationtime" asc="false"/>
-        </ss:simple-search>
-    </context>
 
-    <context type="InboundRequestError" component="zintegrationtool-advanced-search">
-        <as:advanced-search connection-operator="AND">
-            <as:field-list>
-                <as:field name="pk" operator="contains" selected="true"/>
-                <as:field name="owner" operator="contains" selected="true"/>
-                <as:field name="creationtime" operator="contains" selected="true"/>
-                <as:field name="code" operator="contains"/>
-                <as:field name="message" operator="contains"/>
-                <as:field name="modifiedtime" operator="contains"/>
-                <as:field name="coments" operator="contains"/>
-                <!-- <as:field name="inboundRequest" operator="contains" selected="true"/> -->
-            </as:field-list>
-            <as:sort-field name="creationtime" asc="false"/>
-        </as:advanced-search>
-    </context>
-
-    <context type="InboundRequest" component="base" merge-by="type" parent="GenericItem">
-        <y:base>
-            <y:labels>
-                <y:label>integrationKey</y:label>
-                <y:shortLabel>integrationKey</y:shortLabel>
-            </y:labels>
-        </y:base>
-    </context>
-
-    <context component="zintegrationtool-listview">
-        <context type="InboundRequestError">
-            <list:list-view>
-                <list:column qualifier="inboundRequest.type"/>
-                <list:column qualifier="inboundRequest.integrationKey"/>
-                <list:column qualifier="pk"/>
-                <list:column qualifier="creationtime"/>
-                <list:column qualifier="code"/>
-                <list:column qualifier="message"/>
-            </list:list-view>
-        </context>
-    </context>
-
-    <context component="zintegrationtool-editor-area">
-        <context type="InboundRequestError">
-            <ea:editorArea>
-                <ea:tab name="InboundRequestError">
-                    <ea:section name="integrationbackoffice.monitoring.errormonitoring.errordetails">
-                        <!-- <ea:attribute qualifier="inboundRequest.type" readonly="true"/>
-                        <ea:attribute qualifier="inboundRequest.integrationKey" readonly="true"/> -->
-                        <ea:attribute qualifier="pk" readonly="true"/>
-                        <ea:attribute qualifier="creationtime" readonly="true"/>
-                        <ea:attribute qualifier="code" readonly="true"/>
-                        <ea:attribute qualifier="message" readonly="true"/>
-                        <ea:attribute qualifier="inboundRequest" readonly="true"/>
-                    </ea:section>
-                </ea:tab>
-            </ea:editorArea>
-        </context>
-    </context>
-
-    <context type="InboundRequestError" component="listviewactions">
-        <y:actions/>
-    </context>
-
-    <context type="InboundRequestError" component="editorareaactions">
-        <y:actions/>
-    </context>
-
-    <context type="InboundRequest" component="zintegrationtool-listview">
-        <list:list-view>
-            <list:column qualifier="inboundRequestError"/>
-            <list:column qualifier="type"/>
-            <list:column qualifier="integrationKey"/>
-        </list:list-view>
-    </context>
-
-    <context type="InboundRequest" component="zintegrationtool-editor-area" merge-by="component">
-        <ea:editorArea>
-            <ea:tab name="InboundRequest">
-                <ea:section name="integrationbackoffice.monitoring.errormonitoring.error.details">
-                    <ea:attribute qualifier="type" readonly="true"/>
-                    <ea:attribute qualifier="integrationKey" readonly="true"/>
-                </ea:section>
-            </ea:tab>
-        </ea:editorArea>
-    </context>
-
-    <context type="InboundRequest" component="listviewactions">
-        <y:actions/>
-    </context>
-
-    <context type="InboundRequest" component="editorareaactions">
-        <y:actions/>
-    </context>
-
-    <context type="InboundRequest" component="collectioneditorareaactions">
-        <y:actions/>
-    </context>
 
 </config>
