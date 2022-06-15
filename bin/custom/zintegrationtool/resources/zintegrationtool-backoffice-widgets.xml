@@ -46,6 +46,7 @@
                 <setting key="socketDataType_$T" type="String">
                     de.hybris.platform.inboundservices.model.InboundRequestErrorModel
                 </setting>
+                <setting key="maxCharsInCell" value="200"></setting>
                 <setting key="colConfigCtxCode" type="String">zinboundrequest-error-listview</setting>
             </widget>
             <widget id="zInboundRequestErrorDetails"
