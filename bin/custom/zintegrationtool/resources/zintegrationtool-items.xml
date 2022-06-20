@@ -29,17 +29,17 @@
 		<attributes>
 			<attribute qualifier="errorCode" type="java.lang.String" >
 				<description>The Code of an error type</description>
-				<modifiers read="true" write="true" search="true"/>
+				<modifiers read="true" write="true" search="true" optional="false"/>
 				<persistence type="property"/>
 			</attribute>
 			<attribute qualifier="errorMessage" type="java.lang.String">
 				<description>A rudimentary description of the cause of the error </description>
-				<modifiers read="true" write="true" search="true"/>
+				<modifiers read="true" write="true" search="true" optional="false"/>
 				<persistence type="property"/>
 			</attribute>
-			<attribute qualifier="proposedSolution" type="HY">
+			<attribute qualifier="proposedSolution" type="localized:java.lang.String">
 				<description>A proposed Solution that is based on the errorCode </description>
-				<modifiers read="true" write="true" search="true"/>
+				<modifiers read="true" write="true" search="true" optional="false"/>
 				<persistence type="property">
 					<columntype database="oracle">
 						<value>CLOB</value>

@@ -13,12 +13,12 @@
         <setting key="zInboundRequestError_eval" type="String" value="'InboundRequestError'"/>
         <setting key="zInboundRequest_expression" type="String">#root eq 'ZInboundRequest'</setting>
         <setting key="zInboundRequest_eval" type="String" value="'InboundRequest'"/>
-        <setting key="zSolutionTool_expression" type="String">#root eq 'ZSolutionTool'</setting>
-        <setting key="zSolutionTool_eval" type="String" value="'ZProposedSolution'"/>
+        <setting key="zSolutionManager_expression" type="String">#root eq 'ZSolutionManager'</setting>
+        <setting key="zSolutionManager_eval" type="String" value="'ZProposedSolution'"/>
         <virtual-sockets>
             <output id="zInboundRequestError" type="java.lang.String"/>
             <output id="zInboundRequest" type="java.lang.String"/>
-            <output id="ZSolutionTool" type="java.lang.String"/>
+            <output id="zSolutionManager" type="java.lang.String"/>
         </virtual-sockets>
     </widget-extension>
 
@@ -26,7 +26,7 @@
     <widget-extension widgetId="integrationBackofficeViewSwitcher">
         <widget id="zInboundRequestErrorMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
                 slotId="views" title="InboundRequestError Monitoring">
-            <widget id="zInboundRequestErrorViewSearchEngine"
+            <widget id="zInboundRequestErrorSearchEngine"
                     widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
                     slotId="cockpitWidgetChildrenInvisible">
                 <virtual-sockets/>
@@ -70,7 +70,7 @@
     <widget-extension widgetId="integrationBackofficeViewSwitcher">
         <widget id="zInboundRequestMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
                 slotId="views" title="InboundRequest Monitoring">
-            <widget id="zInboundRequestViewSearchEngine"
+            <widget id="zInboundRequestSearchEngine"
                     widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
                     slotId="cockpitWidgetChildrenInvisible">
                 <virtual-sockets/>
@@ -110,6 +110,56 @@
         </virtual-sockets>
     </widget-extension>
 
+    <!-- SolutionManager View -->
+    <widget-extension widgetId="integrationBackofficeViewSwitcher">
+    <widget id="zSolutionManagerMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
+            slotId="views" title="Solution Manager">
+    <widget id="zSolutionSearchEngine"
+            widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
+            slotId="cockpitWidgetChildrenInvisible">
+        <virtual-sockets/>
+    </widget>
+        <widget id="zSolutionSearchCondition" widgetDefinitionId="com.hybris.cockpitng.advancedsearch"
+                slotId="top">
+            <setting key="disableSubtypesCheckbox" type="Boolean">true</setting>
+            <virtual-sockets/>
+        </widget>
+        <widget id="zSolutionSearchResult"
+                widgetDefinitionId="com.hybris.cockpitng.collectionBrowser"
+                slotId="center">
+            <setting key="socketDataType_$T" type="String">
+                com.integrationtool.model.ZProposedSolutionModel
+            </setting>
+          <setting key="listSubtitle" type="String">emptylist</setting>
+            <setting key="pageSize" type="Integer">10</setting>
+            <setting key="maxCharsInCell" type="Integer">200</setting>
+            <setting key="actionSlotComponentId" type="String">listviewactions</setting>
+            <setting key="multiSelect" type="Boolean">true</setting>
+            <setting key="colConfigCtxCode" type="String">listview</setting>
+            <setting key="itemRenderer" type="String">listViewRenderer</setting>
+        </widget>
+        <widget id="zSolutionDetails" widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
+                slotId="bottom" template="false">
+            <setting key="socketDataType_$T" type="String">
+                com.integrationtool.model.ZProposedSolutionModel
+            </setting>
+            <setting key="toolbarDisabled" type="Boolean">true</setting>
+            <setting key="editorAreaConfigCtx" type="String">editor-area</setting>
+            <setting key="actionSlotComponentId" type="String">editorareaactions</setting>
+            <virtual-sockets>
+            </virtual-sockets>
+        </widget>
+        <virtual-sockets/>
+        <setting key="topPanelCollapsed">true</setting>
+    </widget>
+        <setting key="selectzSolutionManagerMonitor_eval" type="String" value="'zSolutionManagerMonitor'" />
+        <virtual-sockets>
+            <input id="selectzSolutionManagerMonitor" type="java.lang.Object" />
+        </virtual-sockets>
+    </widget-extension>
+
+
+
     <!-- Connections InboundRequestError View -->
     <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zInboundRequestError"
                        targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectzInboundRequestErrorMonitor"/>
@@ -118,8 +168,8 @@
     <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zInboundRequestError"
                        targetWidgetId="zInboundRequestErrorSearchCondition" inputId="type"/>
     <widget-connection sourceWidgetId="zInboundRequestErrorSearchCondition" outputId="searchData"
-                       targetWidgetId="zInboundRequestErrorViewSearchEngine" inputId="searchData"/>
-    <widget-connection sourceWidgetId="zInboundRequestErrorViewSearchEngine" outputId="pageable"
+                       targetWidgetId="zInboundRequestErrorSearchEngine" inputId="searchData"/>
+    <widget-connection sourceWidgetId="zInboundRequestErrorSearchEngine" outputId="pageable"
                        targetWidgetId="zInboundRequestErrorSearchResult" inputId="pageable"/>
     <widget-connection sourceWidgetId="zInboundRequestErrorSearchResult" outputId="selectedItem"
                        targetWidgetId="zInboundRequestErrorDetails" inputId="inputObject"/>
@@ -132,10 +182,33 @@
     <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zInboundRequest"
                        targetWidgetId="zInboundRequestSearchCondition" inputId="type"/>
     <widget-connection sourceWidgetId="zInboundRequestSearchCondition" outputId="searchData"
-                       targetWidgetId="zInboundRequestViewSearchEngine" inputId="searchData"/>
-    <widget-connection sourceWidgetId="zInboundRequestViewSearchEngine" outputId="pageable"
+                       targetWidgetId="zInboundRequestSearchEngine" inputId="searchData"/>
+    <widget-connection sourceWidgetId="zInboundRequestSearchEngine" outputId="pageable"
                        targetWidgetId="zInboundRequestSearchResult" inputId="pageable"/>
     <widget-connection sourceWidgetId="zInboundRequestSearchResult" outputId="selectedItem"
                        targetWidgetId="zInboundRequestDetails" inputId="inputObject"/>
 
+    <!-- Connections SolutionManager View -->
+
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zSolutionManager"
+                       targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectzSolutionManagerMonitor"/>
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zSolutionManager"
+                       targetWidgetId="zSolutionManagerMonitor" inputId="activate"/>
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zSolutionManager"
+                       targetWidgetId="zSolutionSearchCondition" inputId="type"/>
+    <widget-connection sourceWidgetId="zSolutionSearchCondition" outputId="searchData"
+                       targetWidgetId="zSolutionSearchEngine" inputId="searchData"/>
+    <widget-connection sourceWidgetId="zSolutionSearchEngine" outputId="pageable"
+                       targetWidgetId="zSolutionSearchResult" inputId="pageable"/>
+    <widget-connection sourceWidgetId="zSolutionSearchResult" outputId="selectedItem"
+                       targetWidgetId="zSolutionDetails" inputId="inputObject"/>
+
+<!--
+    <widget-connection sourceWidgetId="zSolutionDetails" outputId="com.hybris.cockpitng.action.delete.success"
+                       targetWidgetId="backofficeSpaceManagement" inputId="navigationTreeSelectedObject"/>
+    <widget-connection sourceWidgetId="zSolutionDetails" outputId="selectivesyncobject"
+                       targetWidgetId="selectivesync" inputId="inputObject"/>
+    <widget-connection sourceWidgetId="zSolutionDetails" outputId="com.hybris.cockpitng.action.clone.success"
+                       targetWidgetId="zSolutionSearchResult" inputId="focusItem"/>
+-->
 </widgets>

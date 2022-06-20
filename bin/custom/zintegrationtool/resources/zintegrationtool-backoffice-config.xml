@@ -19,8 +19,8 @@
                              code="ZInboundRequestError"/>
                 <n:type-node id="zintegrationtool.explorer.typenode.zinbound"
                              code="ZInboundRequest"/>
-                <n:type-node id="zintegrationtool.explorer.typenode.zsolutiontool"
-                             code="ZSolutionTool"/>
+                <n:type-node id="zintegrationtool.explorer.typenode.zsolutionmanager"
+                             code="ZSolutionManager"/>
             </n:navigation-node>
         </n:explorer-tree>
     </context>
@@ -48,6 +48,7 @@
             <as:sort-field name="creationtime" asc="false"/>
         </as:advanced-search>
     </context>
+
 
     <context component="zinboundrequest-error-listview">
         <context type="InboundRequestError">
@@ -201,7 +202,6 @@
         <y:actions/>
     </context>
 
-
     <context type="InboundRequestError" component="zinboundrequest-listview">
         <list:list-view>
             <list:column qualifier="inboundRequest"/>
@@ -233,6 +233,50 @@
         <y:actions/>
     </context>
 
+    <!-- SolutionManager View Config -->
+    <context type="ZProposedSolution" component="simple-search">
+        <ss:simple-search>
+            <ss:field name="integrationKey"/>
+            <ss:sort-field name="creationtime" asc="false"/>
+        </ss:simple-search>
+    </context>
 
+    <context type="ZProposedSolution" component="advanced-search">
+        <as:advanced-search connection-operator="AND">
+            <as:field-list>
+                <as:field name="errorCode" operator="contains" selected="true"/>
+                <as:field name="errorMessage" operator="contains" selected="true"/>
+                <as:field name="proposedSolution" operator="contains" selected="true"/>
+                <as:field name="creationtime" operator="equals"/>
+            </as:field-list>
+            <as:sort-field name="creationtime" asc="false"/>
+        </as:advanced-search>
+    </context>
+
+    <context type="ZProposedSolution" component="listview">
+        <list:list-view>
+            <list:column qualifier="errorCode"/>
+            <list:column qualifier="errorMessage"/>
+            <list:column qualifier="proposedSolution"/>
+            <list:column qualifier="creationtime"/>
+        </list:list-view>
+    </context>
+
+    <context type="ZProposedSolution" component="integration-editor-area">
+        <ea:editorArea>
+            <ea:tab name="ZProposedSolution">
+                <ea:section name="integrationbackoffice.monitoring.outbound.details">
+                    <ea:attribute qualifier="errorCode" readonly="true"/>
+                    <ea:attribute qualifier="errorMessage" readonly="true"/>
+                    <ea:attribute qualifier="proposedSolution" readonly="true"/>
+                    <ea:attribute qualifier="creationtime" readonly="true"/>
+                </ea:section>
+            </ea:tab>
+        </ea:editorArea>
+    </context>
+
+    <context type="ZProposedSolution" component="editorareaactions">
+        <y:actions/>
+    </context>
 
 </config>
