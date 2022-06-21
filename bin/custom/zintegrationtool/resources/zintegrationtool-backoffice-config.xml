@@ -6,6 +6,7 @@
         xmlns:ea="http://www.hybris.com/cockpitng/component/editorArea"
         xmlns:n="http://www.hybris.com/cockpitng/config/explorertree"
         xmlns:y="http://www.hybris.com/cockpit/config/hybris"
+        xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config"
         xmlns:ss="http://www.hybris.com/cockpitng/config/simplesearch"
         xmlns:as="http://www.hybris.com/cockpitng/config/advancedsearch"
         xmlns:list="http://www.hybris.com/cockpitng/component/listView">
@@ -87,6 +88,15 @@
                 </ea:tab>
             </ea:editorArea>
         </context>
+    </context>
+
+    <context type="InboundRequest" component="base" merge-by="type">
+        <y:base>
+            <y:labels>
+                <y:label>integrationKey + ' / ' + creationtime </y:label>
+                <y:shortLabel>integrationKey +  ' / ' + creationtime</y:shortLabel>
+            </y:labels>
+        </y:base>
     </context>
 
     <context type="InboundRequestError" component="listviewactions">
@@ -174,18 +184,18 @@
                     <ea:attribute qualifier="httpMethod" readonly="true"/>
                     <ea:attribute qualifier="status" readonly="true"/>
                     <ea:attribute qualifier="creationtime" readonly="true"/>
+                    <ea:attribute qualifier="payload" readonly="true"/>
                     <ea:attribute qualifier="user" readonly="true">
                         <ea:editor-parameter>
                             <ea:name>disableDisplayingDetails</ea:name>
                             <ea:value>false</ea:value>
                         </ea:editor-parameter>
                     </ea:attribute>
-                    <ea:attribute qualifier="payload" readonly="true"/>
-                    <ea:panel name="erro.message.inbound.key" colspan="4">
+                    <ea:panel name="error.message.inbound.key" colspan="4">
                         <ea:attribute qualifier="errors">
                             <ea:editor-parameter>
                                 <ea:name>rows</ea:name>
-                                <ea:value>2</ea:value>
+                                <ea:value>3</ea:value>
                             </ea:editor-parameter>
                         </ea:attribute>
                     </ea:panel>
@@ -234,14 +244,14 @@
     </context>
 
     <!-- SolutionManager View Config -->
-    <context type="ZProposedSolution" component="simple-search">
+    <context type="ZProposedSolution" component="zproposedsolution-simple-search">
         <ss:simple-search>
             <ss:field name="integrationKey"/>
             <ss:sort-field name="creationtime" asc="false"/>
         </ss:simple-search>
     </context>
 
-    <context type="ZProposedSolution" component="advanced-search">
+    <context type="ZProposedSolution" component="zproposedsolution-advanced-search">
         <as:advanced-search connection-operator="AND">
             <as:field-list>
                 <as:field name="errorCode" operator="contains" selected="true"/>
@@ -253,7 +263,7 @@
         </as:advanced-search>
     </context>
 
-    <context type="ZProposedSolution" component="listview">
+    <context type="ZProposedSolution" component="zproposedsolution-listview">
         <list:list-view>
             <list:column qualifier="errorCode"/>
             <list:column qualifier="errorMessage"/>
@@ -262,13 +272,13 @@
         </list:list-view>
     </context>
 
-    <context type="ZProposedSolution" component="integration-editor-area">
+    <context type="ZProposedSolution" component="zproposedsolution-editor-area">
         <ea:editorArea>
             <ea:tab name="ZProposedSolution">
-                <ea:section name="integrationbackoffice.monitoring.outbound.details">
+                <ea:section name="integrationbackoffice.zproposedsolution.details">
                     <ea:attribute qualifier="errorCode" readonly="true"/>
                     <ea:attribute qualifier="errorMessage" readonly="true"/>
-                    <ea:attribute qualifier="proposedSolution" readonly="true"/>
+                    <ea:attribute qualifier="proposedSolution" readonly="false"/>
                     <ea:attribute qualifier="creationtime" readonly="true"/>
                 </ea:section>
             </ea:tab>
@@ -278,5 +288,71 @@
     <context type="ZProposedSolution" component="editorareaactions">
         <y:actions/>
     </context>
+<!--
+    <context type="ZProposedSolution" component="create-wizard">
+        <wz:flow id="ZProposedSolutionWizard" title="create.title(ctx.TYPE_CODE)">
+            <wz:prepare id="mediaPrepare">
+                <wz:initialize property="newZProposedSolution" type="ctx.TYPE_CODE"/>
+            </wz:prepare>
+            <wz:step id="step1" label="essential.label" sublabel="essential.sublabel">
+                <wz:content id="step1.content">
+                    <wz:property-list root="newZProposedSolution">
+                        <wz:property qualifier="errorCode"/>
+                        <wz:property qualifier="errorMessage"/>
+                        <wz:property qualifier="proposedSolution"/>
+                    </wz:property-list>
+                </wz:content>
+                <wz:navigation id="step1.navigation">
+                    <wz:cancel/>
+                    <wz:done visible="newZProposedSolution.errorCode != null">
+                        <wz:save property="newZProposedSolution"/>
+                    </wz:done>
+                </wz:navigation>
+            </wz:step>
+        </wz:flow>
+    </context>
+-->
+    <!--
+    <context component="create-wizard">
+        <wz:flow id="InboundChannelConfigurationWizard"
+                 title="integrationbackoffice.inboundchannelconfiguration.create.channel.configuration.title">
+            <wz:prepare id="inboundChannelConfigurationPrepare">
+                <wz:initialize property="inboundchannelconfig" type="InboundChannelConfiguration"/>
+                <wz:initialize property="newIntegrationServiceClientDetail" type="IntegrationClientCredentialsDetails"/>
+            </wz:prepare>
+            <wz:step id="step1" label="integrationbackoffice.inboundchannelconfiguration.create.channel.configuration.step1.label">
+                <wz:content id="step1.content">
+                    <wz:property-list root="inboundchannelconfig">
+                        <wz:property qualifier="integrationObject" />
+                        <wz:property qualifier="authenticationType" />
+                    </wz:property-list>
+                </wz:content>
+                <wz:navigation id="step1.navigation">
+                    <wz:cancel/>
+                    <wz:next visible="inboundchannelconfig.integrationObject != null &amp;&amp; inboundchannelconfig.authenticationType != null &amp;&amp; T(de.hybris.platform.integrationservices.enums.AuthenticationType).OAUTH.equals(inboundchannelconfig.authenticationType)" />
+                    <wz:custom visible="inboundchannelconfig.integrationObject != null &amp;&amp; inboundchannelconfig.authenticationType != null" label="com.hybris.cockpitng.widgets.configurableflow.flow.done"
+                               handler="defaultICCCustomDoneHandler" >
+                    </wz:custom>
+                </wz:navigation>
+            </wz:step>
+            <wz:step id="step2" label="integrationbackoffice.inboundchannelconfiguration.create.channel.configuration.step2.label">
+                <wz:content id="step2.content" merge-mode="append">
+                    <wz:property-list root="newIntegrationServiceClientDetail">
+                        <wz:property qualifier="clientId" description="field.integrationserviceclientdetail.clientid.description"/>
+                        <wz:property qualifier="clientSecret" description="field.integrationserviceclientdetail.clientsecret.description" editor="com.hybris.cockpitng.editor.defaultpassword"/>
+                        <wz:property qualifier="user" description="field.integrationserviceclientdetail.user.description"/>
+                    </wz:property-list>
+                </wz:content>
+                <wz:navigation id="step2.navigation">
+                    <wz:cancel/>
+                    <wz:back/>
+                    <wz:custom label="com.hybris.cockpitng.widgets.configurableflow.flow.done"
+                               handler="defaultICCCustomDoneHandler" >
+                    </wz:custom>
+                </wz:navigation>
+            </wz:step>
+        </wz:flow>
+    </context>
+    -->
 
 </config>

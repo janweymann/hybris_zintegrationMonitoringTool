@@ -88,7 +88,7 @@
                     widgetDefinitionId="com.hybris.cockpitng.collectionBrowser"
                     slotId="center">
                 <setting key="socketDataType_$T" type="String">
-                    de.hybris.platform.inboundservices.model.InboundRequestErrorModel
+                    de.hybris.platform.inboundservices.model.InboundRequestModel
                 </setting>
                 <setting key="maxCharsInCell" value="200"></setting>
                 <setting key="colConfigCtxCode" type="String">zinboundrequest-listview</setting>
@@ -97,7 +97,7 @@
                     widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
                     slotId="bottom">
                 <setting key="socketDataType_$T" type="String">
-                    de.hybris.platform.inboundservices.model.InboundRequestErrorModel
+                    de.hybris.platform.inboundservices.model.InboundRequestModel
                 </setting>
                 <setting key="toolbarDisabled" type="Boolean">true</setting>
                 <setting key="editorAreaConfigCtx" type="String">zinboundrequest-editor-area</setting>
@@ -122,6 +122,8 @@
         <widget id="zSolutionSearchCondition" widgetDefinitionId="com.hybris.cockpitng.advancedsearch"
                 slotId="top">
             <setting key="disableSubtypesCheckbox" type="Boolean">true</setting>
+            <setting key="simpleSearchConfigCtxCode" type="String">zproposedsolution-simple-search</setting>
+            <setting key="advancedSearchConfigCtxCode" type="String">zproposedsolution-advanced-search</setting>
             <virtual-sockets/>
         </widget>
         <widget id="zSolutionSearchResult"
@@ -131,12 +133,9 @@
                 com.integrationtool.model.ZProposedSolutionModel
             </setting>
           <setting key="listSubtitle" type="String">emptylist</setting>
-            <setting key="pageSize" type="Integer">10</setting>
             <setting key="maxCharsInCell" type="Integer">200</setting>
             <setting key="actionSlotComponentId" type="String">listviewactions</setting>
-            <setting key="multiSelect" type="Boolean">true</setting>
-            <setting key="colConfigCtxCode" type="String">listview</setting>
-            <setting key="itemRenderer" type="String">listViewRenderer</setting>
+            <setting key="colConfigCtxCode" type="String">zproposedsolution-listview</setting>
         </widget>
         <widget id="zSolutionDetails" widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
                 slotId="bottom" template="false">
@@ -144,7 +143,7 @@
                 com.integrationtool.model.ZProposedSolutionModel
             </setting>
             <setting key="toolbarDisabled" type="Boolean">true</setting>
-            <setting key="editorAreaConfigCtx" type="String">editor-area</setting>
+            <setting key="editorAreaConfigCtx" type="String">zproposedsolution-editor-area</setting>
             <setting key="actionSlotComponentId" type="String">editorareaactions</setting>
             <virtual-sockets>
             </virtual-sockets>
