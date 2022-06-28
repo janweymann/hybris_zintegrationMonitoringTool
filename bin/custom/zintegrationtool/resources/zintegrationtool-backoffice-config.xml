@@ -20,8 +20,8 @@
                              code="ZInboundRequestError"/>
                 <n:type-node id="zintegrationtool.explorer.typenode.zinbound"
                              code="ZInboundRequest"/>
-                <n:type-node id="zintegrationtool.explorer.typenode.zsolutionmanager"
-                             code="ZSolutionManager"/>
+                <n:type-node id="zintegrationtool.explorer.typenode.zsolutionmaintenance"
+                             code="ZSolutionMaintenance"/>
             </n:navigation-node>
         </n:explorer-tree>
     </context>
@@ -37,26 +37,35 @@
     <context type="InboundRequestError" component="zinboundrequest-error-advanced-search">
         <as:advanced-search connection-operator="AND">
             <as:field-list>
-                <as:field name="pk" operator="contains" selected="true"/>
                 <as:field name="code" operator="contains" selected="true"/>
-                <as:field name="creationtime" operator="contains" selected="true"/>
-                <as:field name="owner" operator="contains"/>
+                <as:field name="creationtime" operator="contains" selected="true">
+                    <as:editor-parameter>
+                        <as:name>comparesExactDate</as:name>
+                        <as:value>true</as:value>
+                    </as:editor-parameter>
+                   <!-- <as:editor-parameter>
+                        <as:name>equalsComparesExactDate</as:name>
+                        <as:value>false</as:value>
+                    </as:editor-parameter> -->
+                </as:field>
+                <as:field name="inboundRequest" operator="contains" selected="true"/>
+                <as:field name="pk" operator="contains" selected="true"/>
+                <as:field name="proposedSolution" operator="contains" selected="true"/>
                 <as:field name="message" operator="contains"/>
+                <as:field name="owner" operator="contains"/>
+                <as:field name="owner" operator="contains"/>
                 <as:field name="modifiedtime" operator="contains"/>
                 <as:field name="coments" operator="contains"/>
-                <as:field name="inboundRequest" operator="contains" selected="true"/>
             </as:field-list>
             <as:sort-field name="creationtime" asc="false"/>
         </as:advanced-search>
     </context>
-
 
     <context component="zinboundrequest-error-listview">
         <context type="InboundRequestError">
             <list:list-view>
                 <list:column qualifier="inboundRequest.type"/>
                 <list:column qualifier="inboundRequest.integrationKey"/>
-                <list:column qualifier="pk"/>
                 <list:column qualifier="creationtime"/>
                 <list:column qualifier="code"/>
                 <list:column qualifier="message"/>
@@ -69,13 +78,11 @@
             <ea:editorArea>
                 <ea:tab name="InboundRequestError">
                     <ea:section name="zintegrationtool.monitoring.inboundrequest.error.details">
-                        <!-- <ea:attribute qualifier="inboundRequest.type" readonly="true"/>
-                        <ea:attribute qualifier="inboundRequest.integrationKey" readonly="true"/> -->
-                        <ea:attribute qualifier="pk" readonly="true"/>
-                        <ea:attribute qualifier="creationtime" readonly="true"/>
                         <ea:attribute qualifier="code" readonly="true"/>
-                        <!-- <ea:attribute qualifier="message" readonly="true"/>-->
+                        <ea:attribute qualifier="proposedSolution" />
                         <ea:attribute qualifier="inboundRequest" readonly="true"/>
+                        <ea:attribute qualifier="creationtime" readonly="true"/>
+                        <ea:attribute qualifier="pk" readonly="true"/>
                         <ea:panel name="error.message.inbounderror.key" colspan="4">
                             <ea:attribute qualifier="message">
                                 <ea:editor-parameter>
@@ -84,6 +91,9 @@
                                 </ea:editor-parameter>
                             </ea:attribute>
                         </ea:panel>
+                        <ea:attribute qualifier="owner" />
+                        <ea:attribute qualifier="modifiedtime" />
+                        <ea:attribute qualifier="coments" />
                     </ea:section>
                 </ea:tab>
             </ea:editorArea>
@@ -98,7 +108,7 @@
             </y:labels>
         </y:base>
     </context>
-
+<!--
     <context type="InboundRequestError" component="listviewactions">
         <y:actions/>
     </context>
@@ -106,7 +116,7 @@
     <context type="InboundRequestError" component="editorareaactions">
         <y:actions/>
     </context>
-
+-->
     <context type="InboundRequest" component="zinbounderror-listview">
         <list:list-view>
             <list:column qualifier="inboundRequestError"/>
@@ -230,7 +240,7 @@
             </ea:tab>
         </ea:editorArea>
     </context>
-
+<!--
     <context type="InboundRequestError" component="listviewactions">
         <y:actions/>
     </context>
@@ -242,7 +252,7 @@
     <context type="InboundRequestError" component="collectioneditorareaactions">
         <y:actions/>
     </context>
-
+-->
     <!-- SolutionManager View Config -->
     <context type="ZProposedSolution" component="zproposedsolution-simple-search">
         <ss:simple-search>
@@ -268,7 +278,6 @@
             <list:column qualifier="errorCode"/>
             <list:column qualifier="errorMessage"/>
             <list:column qualifier="proposedSolution"/>
-            <list:column qualifier="creationtime"/>
         </list:list-view>
     </context>
 
@@ -276,10 +285,23 @@
         <ea:editorArea>
             <ea:tab name="ZProposedSolution">
                 <ea:section name="integrationbackoffice.zproposedsolution.details">
-                    <ea:attribute qualifier="errorCode" readonly="true"/>
-                    <ea:attribute qualifier="errorMessage" readonly="true"/>
-                    <ea:attribute qualifier="proposedSolution" readonly="false"/>
-                    <ea:attribute qualifier="creationtime" readonly="true"/>
+                    <ea:attribute qualifier="errorCode" readonly="false"/>
+                    <ea:panel name="error.message.error.message.key" colspan="4">
+                        <ea:attribute qualifier="errorMessage">
+                            <ea:editor-parameter>
+                                <ea:name>rows</ea:name>
+                                <ea:value>2</ea:value>
+                            </ea:editor-parameter>
+                        </ea:attribute>
+                    </ea:panel>
+                    <ea:panel name="error.message.solution.key" colspan="4">
+                        <ea:attribute qualifier="proposedSolution">
+                            <ea:editor-parameter>
+                                <ea:name>rows</ea:name>
+                                <ea:value>5</ea:value>
+                            </ea:editor-parameter>
+                        </ea:attribute>
+                    </ea:panel>
                 </ea:section>
             </ea:tab>
         </ea:editorArea>
@@ -288,7 +310,7 @@
     <context type="ZProposedSolution" component="editorareaactions">
         <y:actions/>
     </context>
-<!--
+
     <context type="ZProposedSolution" component="create-wizard">
         <wz:flow id="ZProposedSolutionWizard" title="create.title(ctx.TYPE_CODE)">
             <wz:prepare id="mediaPrepare">
@@ -311,7 +333,7 @@
             </wz:step>
         </wz:flow>
     </context>
--->
+
     <!--
     <context component="create-wizard">
         <wz:flow id="InboundChannelConfigurationWizard"

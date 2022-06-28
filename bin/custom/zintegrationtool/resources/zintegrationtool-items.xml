@@ -9,6 +9,25 @@
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
+	<relations>
+		<relation code="InboundRequestError2ZProposedSolution" localized="false" autocreate="true">
+			<deployment table="Error2ZProposedSolution" typecode="10130"/>
+			<sourceElement type="InboundRequestError" qualifier="code" cardinality="many" collectiontype="set"/>
+			<targetElement type="ZProposedSolution" qualifier="proposedSolution" cardinality="many" collectiontype="list">
+			</targetElement>
+		</relation>
+
+<!--
+		<relation code="InboundChannelConfiguration2ExposedDestination" autocreate="true" localized="false">
+			<sourceElement qualifier="inboundChannelConfiguration" type="InboundChannelConfiguration" cardinality="one">
+				<modifiers read="true" write="true" search="true" optional="true" initial="true" unique="true"/>
+			</sourceElement>
+			<targetElement qualifier="exposedDestinations" type="ExposedDestination" cardinality="many" ordered="true" collectiontype="list">
+				<modifiers read="true" write="true" search="true" optional="true" partof="false" />
+			</targetElement>
+		</relation>
+		-->
+	</relations>
 	<itemtypes>
 <!--
 		<itemtype code="ErrorMonitoringRequest" extends="InboundRequest"
@@ -21,8 +40,6 @@
 			<deployment table="ZMonitoringRequestError" typecode="10100"/>
 		</itemtype>
 	-->
-
-
 	<itemtype code="ZProposedSolution" extends="GenericItem"
 			  autocreate="true" generate="true">
 		<deployment table="ZProposedSolution" typecode="10120"/>

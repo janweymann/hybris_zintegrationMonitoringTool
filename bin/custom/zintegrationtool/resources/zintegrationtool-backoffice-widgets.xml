@@ -13,12 +13,12 @@
         <setting key="zInboundRequestError_eval" type="String" value="'InboundRequestError'"/>
         <setting key="zInboundRequest_expression" type="String">#root eq 'ZInboundRequest'</setting>
         <setting key="zInboundRequest_eval" type="String" value="'InboundRequest'"/>
-        <setting key="zSolutionManager_expression" type="String">#root eq 'ZSolutionManager'</setting>
-        <setting key="zSolutionManager_eval" type="String" value="'ZProposedSolution'"/>
+        <setting key="zSolutionMaintenance_expression" type="String">#root eq 'ZSolutionMaintenance'</setting>
+        <setting key="zSolutionMaintenance_eval" type="String" value="'ZProposedSolution'"/>
         <virtual-sockets>
             <output id="zInboundRequestError" type="java.lang.String"/>
             <output id="zInboundRequest" type="java.lang.String"/>
-            <output id="zSolutionManager" type="java.lang.String"/>
+            <output id="zSolutionMaintenance" type="java.lang.String"/>
         </virtual-sockets>
     </widget-extension>
 
@@ -110,10 +110,10 @@
         </virtual-sockets>
     </widget-extension>
 
-    <!-- SolutionManager View -->
+    <!-- SolutionZSolutionMaintenance View -->
     <widget-extension widgetId="integrationBackofficeViewSwitcher">
-    <widget id="zSolutionManagerMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
-            slotId="views" title="Solution Manager">
+    <widget id="zSolutionMaintenanceMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
+            slotId="views" title="Solution Maintenance Monitor">
     <widget id="zSolutionSearchEngine"
             widgetDefinitionId="com.hybris.cockpitng.widgets.common.advancedsearchengine"
             slotId="cockpitWidgetChildrenInvisible">
@@ -131,8 +131,7 @@
                 slotId="center">
             <setting key="socketDataType_$T" type="String">
                 com.integrationtool.model.ZProposedSolutionModel
-            </setting>
-          <setting key="listSubtitle" type="String">emptylist</setting>
+            </setting>>
             <setting key="maxCharsInCell" type="Integer">200</setting>
             <setting key="actionSlotComponentId" type="String">listviewactions</setting>
             <setting key="colConfigCtxCode" type="String">zproposedsolution-listview</setting>
@@ -151,9 +150,9 @@
         <virtual-sockets/>
         <setting key="topPanelCollapsed">true</setting>
     </widget>
-        <setting key="selectzSolutionManagerMonitor_eval" type="String" value="'zSolutionManagerMonitor'" />
+        <setting key="selectzSolutionMaintenanceMonitor_eval" type="String" value="'zSolutionMaintenanceMonitor'" />
         <virtual-sockets>
-            <input id="selectzSolutionManagerMonitor" type="java.lang.Object" />
+            <input id="selectzSolutionMaintenanceMonitor" type="java.lang.Object" />
         </virtual-sockets>
     </widget-extension>
 
@@ -187,13 +186,13 @@
     <widget-connection sourceWidgetId="zInboundRequestSearchResult" outputId="selectedItem"
                        targetWidgetId="zInboundRequestDetails" inputId="inputObject"/>
 
-    <!-- Connections SolutionManager View -->
+    <!-- Connections SolutionMaintenance View -->
 
-    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zSolutionManager"
-                       targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectzSolutionManagerMonitor"/>
-    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zSolutionManager"
-                       targetWidgetId="zSolutionManagerMonitor" inputId="activate"/>
-    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zSolutionManager"
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zSolutionMaintenance"
+                       targetWidgetId="integrationBackofficeViewSwitcher" inputId="selectzSolutionMaintenanceMonitor"/>
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zSolutionMaintenance"
+                       targetWidgetId="zSolutionMaintenanceMonitor" inputId="activate"/>
+    <widget-connection sourceWidgetId="integrationTypeCodeRouter" outputId="zSolutionMaintenance"
                        targetWidgetId="zSolutionSearchCondition" inputId="type"/>
     <widget-connection sourceWidgetId="zSolutionSearchCondition" outputId="searchData"
                        targetWidgetId="zSolutionSearchEngine" inputId="searchData"/>

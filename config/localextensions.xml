@@ -290,6 +290,7 @@
     <extension name='xyformsservices' />
     <extension name='xyformsstorefrontcommons' />
     <extension name='xyformsweb' />
+    <extension name='sapcpiproductexchange' />
 	<extension name='zintegrationtool' />
   </extensions>
 </hybrisconfig>

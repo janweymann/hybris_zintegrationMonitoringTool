@@ -10,6 +10,28 @@
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+	<bean id="error2ZProposedSolutionInterceptor" class="com.integrationtool.interceptor.Error2ZProposedSolutionInterceptor"
+		  autowire="byName">
+		<property name="zSolutionDaoImpl" ref="zSolutionDaoImpl"/>
+	</bean>
+
+	<bean id="zValidateInterceptorMapping"
+			class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="error2ZProposedSolutionInterceptor"/>
+		<property name="typeCode" value="InboundRequestError"/>
+		<property name="replacedInterceptors" ref="uniqueCatalogItemValidator"/>
+	</bean>
+
+	<!--
+	<bean id="ZSolutionDao" class="com.integrationtool.dao.ZSolutionDao">
+	</bean>
+	-->
+
+	<bean id="zSolutionDaoImpl" class="com.integrationtool.dao.impl.ZSolutionDaoImpl" parent="abstractItemDao">
+		<!--<property name="flexibleSearchService" ref="flexibleSearchService"/> -->
+		<!-- <property name="ZSolutionDao" ref="ZSolutionDao"/> -->
+	</bean>
+
 	<!--
 	The hybris platform provides one single Spring application context for beans located at the jalo layer.
 	Each extension can add beans to this context by specifying them at this configuration file.
