@@ -48,6 +48,7 @@
                 </setting>
                 <setting key="maxCharsInCell" value="200"></setting>
                 <setting key="colConfigCtxCode" type="String">zinboundrequest-error-listview</setting>
+                <setting key="actionSlotComponentId" type="String">zinboundrequest-error-listviewactions</setting>
             </widget>
             <widget id="zInboundRequestErrorDetails"
                     widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
@@ -57,6 +58,7 @@
                 </setting>
                 <setting key="toolbarDisabled" type="Boolean">true</setting>
                 <setting key="editorAreaConfigCtx" type="String">zinbound-error-editor-area</setting>
+                <setting key="actionSlotComponentId" type="String">zinboundrequest-error-editorareaactions</setting>
             </widget>
             <setting key="topPanelCollapsed">true</setting>
         </widget>
@@ -92,6 +94,7 @@
                 </setting>
                 <setting key="maxCharsInCell" value="200"></setting>
                 <setting key="colConfigCtxCode" type="String">zinboundrequest-listview</setting>
+                <setting key="actionSlotComponentId" type="String">zinboundrequest-listviewactions</setting>
             </widget>
             <widget id="zInboundRequestDetails"
                     widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
@@ -110,7 +113,7 @@
         </virtual-sockets>
     </widget-extension>
 
-    <!-- SolutionZSolutionMaintenance View -->
+    <!-- Solution Maintenance View -->
     <widget-extension widgetId="integrationBackofficeViewSwitcher">
     <widget id="zSolutionMaintenanceMonitor" widgetDefinitionId="com.hybris.cockpitng.collapsiblecontainer"
             slotId="views" title="Solution Maintenance Monitor">
@@ -133,7 +136,7 @@
                 com.integrationtool.model.ZProposedSolutionModel
             </setting>>
             <setting key="maxCharsInCell" type="Integer">200</setting>
-            <setting key="actionSlotComponentId" type="String">listviewactions</setting>
+            <setting key="actionSlotComponentId" type="String">zproposedsolution-listviewactions</setting>
             <setting key="colConfigCtxCode" type="String">zproposedsolution-listview</setting>
         </widget>
         <widget id="zSolutionDetails" widgetDefinitionId="com.hybris.cockpitng.backoffice.defaultEditorArea"
@@ -141,9 +144,7 @@
             <setting key="socketDataType_$T" type="String">
                 com.integrationtool.model.ZProposedSolutionModel
             </setting>
-            <setting key="toolbarDisabled" type="Boolean">true</setting>
             <setting key="editorAreaConfigCtx" type="String">zproposedsolution-editor-area</setting>
-            <setting key="actionSlotComponentId" type="String">editorareaactions</setting>
             <virtual-sockets>
             </virtual-sockets>
         </widget>

@@ -19,7 +19,6 @@
 			class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
 		<property name="interceptor" ref="error2ZProposedSolutionInterceptor"/>
 		<property name="typeCode" value="InboundRequestError"/>
-		<property name="replacedInterceptors" ref="uniqueCatalogItemValidator"/>
 	</bean>
 
 	<!--

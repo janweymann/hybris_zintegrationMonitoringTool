@@ -24,7 +24,7 @@ public class ZSolutionDaoImpl extends AbstractItemDao implements ZSolutionDao {
 
     final private static String QUERY_GET_TEMPLATE_BY_ERRORCODE = "SELECT {" + Item.PK + "} FROM {"
             + ZProposedSolutionModel._TYPECODE + "} WHERE {" + ZProposedSolutionModel.ERRORCODE + "} = ?errorCode";
-
+    @Override
     public List<ZProposedSolutionModel> getProposedSolutionByErrorCode(final String errorCode) {
 
         validateParameterNotNull(errorCode, "ErrorCode must not be null");
