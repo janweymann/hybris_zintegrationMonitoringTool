@@ -11,20 +11,124 @@
         xmlns:as="http://www.hybris.com/cockpitng/config/advancedsearch"
         xmlns:list="http://www.hybris.com/cockpitng/component/listView">
 
-
     <!-- Extension zExplorer Tree -->
     <context component="integrationbackoffice-explorer-tree" merge-by="component">
         <n:explorer-tree>
-            <n:navigation-node id="zintegrationtool.explorer.treenode.errormonitoring"
+            <n:navigation-node id="integrationbackoffice.explorer.treenode.errormonitoring"
                                expanded-by-default="true" position="2">
-                <n:type-node id="zintegrationtool.explorer.typenode.zinbounderror"
+                <n:type-node id="integrationtool.explorer.typenode.zinbounderror"
                              code="ZInboundRequestError"/>
-                <n:type-node id="zintegrationtool.explorer.typenode.zinbound"
+                <n:type-node id="integrationtool.explorer.typenode.zinboundrequest"
                              code="ZInboundRequest"/>
-                <n:type-node id="zintegrationtool.explorer.typenode.zsolutionmaintenance"
+                <n:type-node id="integrationtool.explorer.typenode.zsolutionmaintenance"
                              code="ZSolutionMaintenance"/>
             </n:navigation-node>
         </n:explorer-tree>
+    </context>
+
+    <!-- ZInboundRequestError View Config -->
+    <context type="InboundRequestError" component="zinboundrequest-error-simple-search">
+        <ss:simple-search>
+            <ss:field name="pk"/>
+        </ss:simple-search>
+    </context>
+
+    <context type="InboundRequestError" component="zinboundrequest-error-advanced-search">
+        <as:advanced-search connection-operator="AND">
+            <as:field-list>
+                <as:field name="code" operator="contains" selected="true"/>
+                <as:field name="creationtime" operator="contains" selected="true">
+                    <as:editor-parameter>
+                        <as:name>comparesExactDate</as:name>
+                        <as:value>true</as:value>
+                    </as:editor-parameter>
+                    <as:editor-parameter>
+                        <as:name>equalsComparesExactDate</as:name>
+                        <as:value>false</as:value>
+                    </as:editor-parameter>
+                </as:field>
+                <as:field name="inboundRequest" operator="contains" selected="true"/>
+                <as:field name="pk" operator="contains" selected="true"/>
+                <as:field name="proposedSolution" operator="contains" selected="true"/>
+                <as:field name="message" operator="contains"/>
+                <as:field name="owner" operator="contains"/>
+                <as:field name="modifiedtime" operator="contains"/>
+                <as:field name="coments" operator="contains"/>
+            </as:field-list>
+        </as:advanced-search>
+    </context>
+
+    <context component="zinboundrequest-error-listview">
+        <context type="InboundRequestError">
+            <list:list-view>
+                <list:column qualifier="inboundRequest.type"/>
+                <list:column qualifier="inboundRequest.integrationKey"/>
+                <list:column qualifier="creationtime"/>
+                <list:column qualifier="code"/>
+                <list:column qualifier="message"/>
+            </list:list-view>
+        </context>
+    </context>
+
+    <context component="zinbound-error-editor-area">
+        <context type="InboundRequestError">
+            <ea:editorArea>
+                <ea:tab name="InboundRequestError">
+                    <ea:section name="zintegrationtool.monitoring.inboundrequest.error.details">
+                        <ea:attribute qualifier="code" readonly="true"/>
+                        <ea:attribute qualifier="inboundRequest" readonly="true"/>
+                        <ea:attribute qualifier="creationtime" readonly="true"/>
+                        <ea:attribute qualifier="pk" readonly="true"/>
+                        <ea:panel name="error.message.inbounderror.key" colspan="4">
+                            <ea:attribute qualifier="message">
+                                <ea:editor-parameter>
+                                    <ea:name>rows</ea:name>
+                                    <ea:value>2</ea:value>
+                                </ea:editor-parameter>
+                            </ea:attribute>
+                        </ea:panel>
+                        <ea:panel name="error.solution.key" colspan="4">
+                            <ea:attribute qualifier="proposedSolution">
+                                <ea:editor-parameter>
+                                    <ea:name>rows</ea:name>
+                                    <ea:value>1</ea:value>
+                                </ea:editor-parameter>
+                            </ea:attribute>
+                        </ea:panel>
+                        <ea:attribute qualifier="owner"/>
+                        <ea:attribute qualifier="modifiedtime"/>
+                        <ea:attribute qualifier="coments"/>
+                    </ea:section>
+                </ea:tab>
+            </ea:editorArea>
+        </context>
+    </context>
+
+    <context type="InboundRequest" component="base" merge-by="type">
+        <y:base>
+            <y:labels>
+                <y:label>integrationKey + ' / ' + creationtime</y:label>
+                <y:shortLabel>integrationKey + ' / ' + creationtime</y:shortLabel>
+            </y:labels>
+        </y:base>
+    </context>
+
+    <context type="ZProposedSolution" component="base" merge-by="type">
+        <y:base>
+            <y:labels>
+                <y:label>proposedSolution</y:label>
+                <y:shortLabel>proposedSolution</y:shortLabel>
+            </y:labels>
+        </y:base>
+    </context>
+
+    <context type="InboundRequestError" component="zinboundrequest-error-listviewactions">
+        <y:actions>
+            <y:group qualifier="common" show-group-header="false" position="10">
+                <y:action action-id="com.hybris.cockpitng.listview.action.export.csv"
+                          property="exportColumnsAndData" position="30"/>
+            </y:group>
+        </y:actions>
     </context>
 
     <!-- InboundRequest View Config -->
@@ -45,8 +149,16 @@
                 <as:field name="httpMethod" operator="equals" selected="true"/>
                 <as:field name="status" operator="equals" selected="true"/>
                 <as:field name="user" operator="equals" selected="true"/>
-                <as:field name="creationtime" operator="greaterOrEquals"/>
-                <as:field name="creationtime" operator="lessOrEquals"/>
+                <as:field name="creationtime" operator="contains" selected="true">
+                    <as:editor-parameter>
+                        <as:name>comparesExactDate</as:name>
+                        <as:value>true</as:value>
+                    </as:editor-parameter>
+                    <as:editor-parameter>
+                        <as:name>equalsComparesExactDate</as:name>
+                        <as:value>false</as:value>
+                    </as:editor-parameter>
+                </as:field>
             </as:field-list>
             <as:sort-field name="creationtime" asc="false"/>
         </as:advanced-search>
@@ -121,147 +233,10 @@
         <y:actions/>
     </context>
 
-
-    <context type="InboundRequestError" component="zinboundrequest-listview">
-        <list:list-view>
-            <list:column qualifier="inboundRequest"/>
-            <list:column qualifier="code"/>
-            <list:column qualifier="message"/>
-        </list:list-view>
-    </context>
-
-    <context type="InboundRequestError" component="zinboundrequest-editor-area">
-        <ea:editorArea>
-            <ea:tab name="InboundRequestError">
-                <ea:section name="integrationbackoffice.monitoring.errormonitoring.error.details">
-                    <ea:attribute qualifier="code" readonly="true"/>
-                    <ea:attribute qualifier="message" readonly="true"/>
-                </ea:section>
-            </ea:tab>
-        </ea:editorArea>
-    </context>
-
-    <!-- ZInboundRequestError View Config -->
-    <context type="InboundRequestError" component="zinboundrequest-error-simple-search">
-        <ss:simple-search>
-            <ss:field name="inboundRequest"/>
-            <ss:sort-field name="creationtime" asc="false"/>
-        </ss:simple-search>
-    </context>
-
-    <context type="InboundRequestError" component="zinboundrequest-error-advanced-search">
-        <as:advanced-search connection-operator="AND">
-            <as:field-list>
-                <as:field name="code" operator="contains" selected="true"/>
-                <as:field name="creationtime" operator="contains" selected="true">
-                    <as:editor-parameter>
-                        <as:name>comparesExactDate</as:name>
-                        <as:value>true</as:value>
-                    </as:editor-parameter>
-                    <as:editor-parameter>
-                        <as:name>equalsComparesExactDate</as:name>
-                        <as:value>false</as:value>
-                    </as:editor-parameter>
-                </as:field>
-                <as:field name="inboundRequest" operator="contains" selected="true"/>
-                <as:field name="pk" operator="contains" selected="true"/>
-                <as:field name="proposedSolution" operator="contains" selected="true"/>
-                <as:field name="message" operator="contains"/>
-                <as:field name="owner" operator="contains"/>
-                <as:field name="owner" operator="contains"/>
-                <as:field name="modifiedtime" operator="contains"/>
-                <as:field name="coments" operator="contains"/>
-            </as:field-list>
-            <as:sort-field name="creationtime" asc="false"/>
-        </as:advanced-search>
-    </context>
-
-    <context component="zinboundrequest-error-listview">
-        <context type="InboundRequestError">
-            <list:list-view>
-                <list:column qualifier="inboundRequest.type"/>
-                <list:column qualifier="inboundRequest.integrationKey"/>
-                <list:column qualifier="creationtime"/>
-                <list:column qualifier="code"/>
-                <list:column qualifier="message"/>
-            </list:list-view>
-        </context>
-    </context>
-
-    <context component="zinbound-error-editor-area">
-        <context type="InboundRequestError">
-            <ea:editorArea>
-                <ea:tab name="InboundRequestError">
-                    <ea:section name="zintegrationtool.monitoring.inboundrequest.error.details">
-                        <ea:attribute qualifier="code" readonly="true"/>
-                        <ea:attribute qualifier="inboundRequest" readonly="true"/>
-                        <ea:attribute qualifier="creationtime" readonly="true"/>
-                        <ea:attribute qualifier="pk" readonly="true"/>
-                        <ea:panel name="error.message.inbounderror.key" colspan="4">
-                            <ea:attribute qualifier="message">
-                                <ea:editor-parameter>
-                                    <ea:name>rows</ea:name>
-                                    <ea:value>2</ea:value>
-                                </ea:editor-parameter>
-                            </ea:attribute>
-                        </ea:panel>
-                        <ea:panel name="error.solution.key" colspan="4">
-                            <ea:attribute qualifier="proposedSolution">
-                                <ea:editor-parameter>
-                                    <ea:name>rows</ea:name>
-                                    <ea:value>1</ea:value>
-                                </ea:editor-parameter>
-                            </ea:attribute>
-                        </ea:panel>
-                        <ea:attribute qualifier="owner" />
-                        <ea:attribute qualifier="modifiedtime" />
-                        <ea:attribute qualifier="coments" />
-                    </ea:section>
-                </ea:tab>
-            </ea:editorArea>
-        </context>
-    </context>
-
-    <context type="InboundRequest" component="base" merge-by="type">
-        <y:base>
-            <y:labels>
-                <y:label>integrationKey + ' / ' + creationtime </y:label>
-                <y:shortLabel>integrationKey +  ' / ' + creationtime</y:shortLabel>
-            </y:labels>
-        </y:base>
-    </context>
-
-    <context type="ZProposedSolution" component="base" merge-by="type">
-        <y:base>
-            <y:labels>
-                <y:label>proposedSolution</y:label>
-                <y:shortLabel>proposedSolution</y:shortLabel>
-            </y:labels>
-        </y:base>
-    </context>
-
-    <context type="InboundRequestError" component="zinboundrequest-error-listviewactions">
-        <y:actions>
-            <y:group qualifier="common" show-group-header="false" position="10">
-                <y:action action-id="com.hybris.cockpitng.listview.action.export.csv"
-                          property="exportColumnsAndData" position="30"/>
-            </y:group>
-        </y:actions>
-    </context>
-
-    <context type="InboundRequest" component="zinbounderror-listview">
-        <list:list-view>
-            <list:column qualifier="inboundRequestError"/>
-            <list:column qualifier="type"/>
-            <list:column qualifier="integrationKey"/>
-        </list:list-view>
-    </context>
-
     <!-- Solution Maintenance Monitor View Config -->
     <context type="ZProposedSolution" component="zproposedsolution-simple-search">
         <ss:simple-search>
             <ss:field name="errorCode"/>
-            <ss:sort-field name="creationtime" asc="false"/>
         </ss:simple-search>
     </context>
 
@@ -273,7 +248,6 @@
                 <as:field name="proposedSolution" operator="contains" selected="true"/>
                 <as:field name="creationtime" operator="equals"/>
             </as:field-list>
-            <as:sort-field name="creationtime" asc="false"/>
         </as:advanced-search>
     </context>
 
@@ -302,19 +276,16 @@
                         <ea:attribute qualifier="proposedSolution">
                             <ea:editor-parameter>
                                 <ea:name>rows</ea:name>
-                                <ea:value>7</ea:value>
+                                <ea:value>10</ea:value>
                             </ea:editor-parameter>
                         </ea:attribute>
+                        <ea:attribute qualifier="creationtime"/>
+                        <ea:attribute qualifier="mediaFile"/>
                     </ea:panel>
                 </ea:section>
             </ea:tab>
         </ea:editorArea>
     </context>
-
-    <context type="ZProposedSolution" component="zproposedsolution-editorareaactions">
-        <y:actions/>
-    </context>
-
 
     <context type="ZProposedSolution" component="zproposedsolution-listviewactions">
         <y:actions>
@@ -340,6 +311,7 @@
                         <wz:property qualifier="errorCode"/>
                         <wz:property qualifier="errorMessage"/>
                         <wz:property qualifier="proposedSolution"/>
+                        <wz:property qualifier="mediaFile"/>
                     </wz:property-list>
                 </wz:content>
                 <wz:navigation id="step1.navigation">
@@ -351,4 +323,6 @@
             </wz:step>
         </wz:flow>
     </context>
+
 </config>
+

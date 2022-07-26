@@ -2,109 +2,62 @@
 <!--
  Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
 -->
-<!--
-	ATTENTION: This is just an example file. You have to edit it according to your needs.
--->
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="items.xsd">
 
-<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			xsi:noNamespaceSchemaLocation="items.xsd">
+    <relations>
+        <relation code="InboundRequestError2ZProposedSolution" localized="false">
+            <deployment table="Error2ZProposedSolution" typecode="10130"/>
+            <sourceElement type="InboundRequestError" qualifier="code"
+						   cardinality="many" collectiontype="set"/>
+            <targetElement type="ZProposedSolution" qualifier="proposedSolution"
+                           cardinality="many" collectiontype="list">
+            </targetElement>
+        </relation>
+    </relations>
 
-	<relations>
-		<relation code="InboundRequestError2ZProposedSolution" localized="false" autocreate="true">
-			<deployment table="Error2ZProposedSolution" typecode="10130"/>
-			<sourceElement type="InboundRequestError" qualifier="code" cardinality="many" collectiontype="set"/>
-			<targetElement type="ZProposedSolution" qualifier="proposedSolution" cardinality="many" collectiontype="list">
-			</targetElement>
-		</relation>
-
-<!--
-		<relation code="InboundChannelConfiguration2ExposedDestination" autocreate="true" localized="false">
-			<sourceElement qualifier="inboundChannelConfiguration" type="InboundChannelConfiguration" cardinality="one">
-				<modifiers read="true" write="true" search="true" optional="true" initial="true" unique="true"/>
-			</sourceElement>
-			<targetElement qualifier="exposedDestinations" type="ExposedDestination" cardinality="many" ordered="true" collectiontype="list">
-				<modifiers read="true" write="true" search="true" optional="true" partof="false" />
-			</targetElement>
-		</relation>
-		-->
-	</relations>
-	<itemtypes>
-<!--
-		<itemtype code="ErrorMonitoringRequest" extends="InboundRequest"
-		autocreate="true" generate="true">
-			<deployment table="ZMonitoringRequest" typecode="10110"/>
-		</itemtype>
-
-		<itemtype code="ErrorMonitoringRequestError" extends="InboundRequestError"
-				  autocreate="true" generate="true">
-			<deployment table="ZMonitoringRequestError" typecode="10100"/>
-		</itemtype>
-	-->
-	<itemtype code="ZProposedSolution" extends="GenericItem"
-			  autocreate="true" generate="true">
-		<deployment table="ZProposedSolution" typecode="10120"/>
-		<attributes>
-			<attribute qualifier="errorCode" type="java.lang.String" >
-				<description>The Code of an error type</description>
-				<modifiers read="true" write="true" search="true" />
-				<persistence type="property"/>
-			</attribute>
-			<attribute qualifier="errorMessage" type="java.lang.String">
-				<description>A rudimentary description of the cause of the error </description>
-				<modifiers read="true" write="true" search="true"/>
-				<persistence type="property"/>
-			</attribute>
-			<attribute qualifier="proposedSolution" type="localized:java.lang.String">
-				<description>A proposed Solution that is based on the errorCode </description>
-				<modifiers read="true" write="true" search="true"/>
-				<persistence type="property">
-					<columntype database="oracle">
-						<value>CLOB</value>
-					</columntype>
-					<columntype database="sap">
-						<value>NCLOB</value>
-					</columntype>
-					<columntype database="mysql">
-						<value>LONGTEXT</value>
-					</columntype>
-					<columntype database="sqlserver">
-						<value>nvarchar(max)</value>
-					</columntype>
-					<columntype>
-						<value>HYBRIS.LONG_STRING</value>
-					</columntype>
-				</persistence>
-			</attribute>
-		</attributes>
-	</itemtype>
-
-</itemtypes>
-
-<!--
-		<itemtype generate="true"
-		   code="MyProduct"
-		   jaloclass="com.hybris.backoffice.jalo.MyProduct"
-		   extends="Product"
-		   autocreate="true"
-	   >
-			<attributes>
-				<attribute qualifier="myExampleInitialStringField" type="java.lang.String">
-					<description>My Example Initial String Value</description>
-					<modifiers initial="true"/>
-					<persistence type="property"/>
-				</attribute>
-
-				<attribute qualifier="myExampleBooleanField" type="java.lang.Boolean">
-					<description>Example Initial Boolean Field</description>
-               <persistence type="property"/>
-				</attribute>
-
-				<attribute qualifier="media" type="Media">
-					<persistence type="property"/>
-				</attribute>
-
-			</attributes>
-		</itemtype>
--->
+    <itemtypes>
+        <itemtype code="ZProposedSolution" extends="GenericItem">
+            <deployment table="ZProposedSolution" typecode="10120"/>
+            <attributes>
+                <attribute qualifier="errorCode" type="java.lang.String">
+                    <description>The Code of an error type</description>
+                    <modifiers read="true" write="true" search="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="errorMessage" type="java.lang.String">
+                    <description>A rudimentary description of the cause of the error</description>
+                    <modifiers read="true" write="true" search="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="mediaFile" type="Media">
+                    <description>Media file that support the solution proposal</description>
+                    <persistence type="property" />
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                </attribute>
+                <attribute qualifier="proposedSolution" type="localized:java.lang.String">
+                    <description>A proposed Solution that is based on the errorCode</description>
+                    <modifiers read="true" write="true" search="true"/>
+                    <persistence type="property">
+                        <columntype database="oracle">
+                            <value>CLOB</value>
+                        </columntype>
+                        <columntype database="sap">
+                            <value>NCLOB</value>
+                        </columntype>
+                        <columntype database="mysql">
+                            <value>LONGTEXT</value>
+                        </columntype>
+                        <columntype database="sqlserver">
+                            <value>nvarchar(max)</value>
+                        </columntype>
+                        <columntype>
+                            <value>HYBRIS.LONG_STRING</value>
+                        </columntype>
+                    </persistence>
+                </attribute>
+            </attributes>
+        </itemtype>
+    </itemtypes>
 
 </items>

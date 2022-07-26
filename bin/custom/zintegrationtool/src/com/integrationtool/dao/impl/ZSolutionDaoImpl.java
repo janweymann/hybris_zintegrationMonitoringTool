@@ -21,13 +21,14 @@ import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParamete
 public class ZSolutionDaoImpl extends AbstractItemDao implements ZSolutionDao {
     private static final Logger LOG = LoggerFactory.getLogger(ZSolutionDaoImpl.class);
 
-
     final private static String QUERY_GET_TEMPLATE_BY_ERRORCODE = "SELECT {" + Item.PK + "} FROM {"
-            + ZProposedSolutionModel._TYPECODE + "} WHERE {" + ZProposedSolutionModel.ERRORCODE + "} = ?errorCode";
+            + ZProposedSolutionModel._TYPECODE + "} WHERE " +
+            "{" + ZProposedSolutionModel.ERRORCODE + "} = ?errorCode";
+
     @Override
     public List<ZProposedSolutionModel> getProposedSolutionByErrorCode(final String errorCode) {
 
-        validateParameterNotNull(errorCode, "ErrorCode must not be null");
+        validateParameterNotNull(errorCode, "Error code must not be null");
         List<ZProposedSolutionModel> result = null;
 
         final Map<String, Object> queryParams = new HashMap<String, Object>();
@@ -43,7 +44,7 @@ public class ZSolutionDaoImpl extends AbstractItemDao implements ZSolutionDao {
 
         } else {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("No Solution item was found with error code: " + errorCode);
+                LOG.debug("No solution item was found with error code: " + errorCode);
             }
         }
         return result;

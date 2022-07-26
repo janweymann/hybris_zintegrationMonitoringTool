@@ -7,8 +7,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<!-- <bean id="zintegrationtoolService" class="com.integrationtool.services.ZintegrationtoolService" /> -->
-
 	<bean id="zintegrationbackofficeLabelLocator" class="com.hybris.cockpitng.util.labels.ResourcesLabelLocator"
 		  scope="singleton" init-method="init" lazy-init="false">
 		<property name="location" value="/zntegrationbackoffice-backoffice-labels/"/>
