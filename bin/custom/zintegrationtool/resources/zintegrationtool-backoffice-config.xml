@@ -58,50 +58,46 @@
         </as:advanced-search>
     </context>
 
-    <context component="zinboundrequest-error-listview">
-        <context type="InboundRequestError">
-            <list:list-view>
-                <list:column qualifier="inboundRequest.type"/>
-                <list:column qualifier="inboundRequest.integrationKey"/>
-                <list:column qualifier="creationtime"/>
-                <list:column qualifier="code"/>
-                <list:column qualifier="message"/>
-            </list:list-view>
-        </context>
+    <context component="zinboundrequest-error-listview" type="InboundRequestError">
+        <list:list-view>
+            <list:column qualifier="inboundRequest.type"/>
+            <list:column qualifier="inboundRequest.integrationKey"/>
+            <list:column qualifier="creationtime"/>
+            <list:column qualifier="code"/>
+            <list:column qualifier="message"/>
+        </list:list-view>
     </context>
 
-    <context component="zinbound-error-editor-area">
-        <context type="InboundRequestError">
-            <ea:editorArea>
-                <ea:tab name="InboundRequestError">
-                    <ea:section name="zintegrationtool.monitoring.inboundrequest.error.details">
-                        <ea:attribute qualifier="code" readonly="true"/>
-                        <ea:attribute qualifier="inboundRequest" readonly="true"/>
-                        <ea:attribute qualifier="creationtime" readonly="true"/>
-                        <ea:attribute qualifier="pk" readonly="true"/>
-                        <ea:panel name="error.message.inbounderror.key" colspan="4">
-                            <ea:attribute qualifier="message">
-                                <ea:editor-parameter>
-                                    <ea:name>rows</ea:name>
-                                    <ea:value>2</ea:value>
-                                </ea:editor-parameter>
-                            </ea:attribute>
-                        </ea:panel>
-                        <ea:panel name="error.solution.key" colspan="4">
-                            <ea:attribute qualifier="proposedSolution">
-                                <ea:editor-parameter>
-                                    <ea:name>rows</ea:name>
-                                    <ea:value>1</ea:value>
-                                </ea:editor-parameter>
-                            </ea:attribute>
-                        </ea:panel>
-                        <ea:attribute qualifier="owner"/>
-                        <ea:attribute qualifier="modifiedtime"/>
-                        <ea:attribute qualifier="coments"/>
-                    </ea:section>
-                </ea:tab>
-            </ea:editorArea>
-        </context>
+    <context component="zinbound-error-editor-area" type="InboundRequestError">
+        <ea:editorArea>
+            <ea:tab name="InboundRequestError">
+                <ea:section name="zintegrationtool.monitoring.inboundrequest.error.details">
+                    <ea:attribute qualifier="code" readonly="true"/>
+                    <ea:attribute qualifier="inboundRequest" readonly="true"/>
+                    <ea:attribute qualifier="creationtime" readonly="true"/>
+                    <ea:attribute qualifier="pk" readonly="true"/>
+                    <ea:panel name="error.message.inbounderror.key" colspan="4">
+                        <ea:attribute qualifier="message">
+                            <ea:editor-parameter>
+                                <ea:name>rows</ea:name>
+                                <ea:value>2</ea:value>
+                            </ea:editor-parameter>
+                        </ea:attribute>
+                    </ea:panel>
+                    <ea:panel name="error.solution.key" colspan="4">
+                        <ea:attribute qualifier="proposedSolution">
+                            <ea:editor-parameter>
+                                <ea:name>rows</ea:name>
+                                <ea:value>1</ea:value>
+                            </ea:editor-parameter>
+                        </ea:attribute>
+                    </ea:panel>
+                    <ea:attribute qualifier="owner"/>
+                    <ea:attribute qualifier="modifiedtime"/>
+                    <ea:attribute qualifier="coments"/>
+                </ea:section>
+            </ea:tab>
+        </ea:editorArea>
     </context>
 
     <context type="InboundRequest" component="base" merge-by="type">
